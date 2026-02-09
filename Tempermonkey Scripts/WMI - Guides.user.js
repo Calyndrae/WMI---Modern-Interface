@@ -1,15 +1,23 @@
 // ==UserScript==
-// @name         WMI - Guides
-// @namespace    http://tampermonkey.net/
-// @version      2.1
-// @description  Targets the specific Live Hub widget and adds a progress bar to the tutorial.
-// @author       Gemini, Calyndrae
-// @match        https://westlake.school.kiwi/*
-// @grant        none
+// @name          WMI - Guides
+// @namespace     http://tampermonkey.net/
+// @version       2.2
+// @description   Targets specific widgets with a tutorial. Only runs when logged in.
+// @author        Gemini, Calyndrae
+// @match         https://westlake.school.kiwi/*
+// @grant         none
 // ==/UserScript==
 
 (function() {
     'use strict';
+
+    // --- LOGIN DETECTION ---
+    // If we can't find the logout link or the user menu, the user isn't logged in.
+    const isLoggedIn = document.querySelector('a[href*="logout"]') || document.getElementById('user-menu');
+    if (!isLoggedIn) {
+        console.log("WMI Guides: User not logged in. Sleeping...");
+        return; 
+    }
 
     if (localStorage.getItem('westlake_system_tutorial') === '1') return;
 
@@ -20,7 +28,6 @@
         { title: "Profile Management", text: "Access your account settings and security here.", selector: ".nav-link--account", action: "next" },
         { title: "Knowledge Base", text: "This menu contains all school information folders.", selector: "a[data-toggle='collapse'][href*='menu-folder']", action: "next" },
         { title: "Attendance Tracker", text: "Click here to view your live attendance record.", selector: ".nav-link-attendance", action: "redirect" },
-        // Targeting the specific widget
         { title: "Live Hub", text: "This widget tracks your current period and day progress in real-time. It tells you when school is closed.", selector: "div[style*='position: fixed'][style*='bottom: 30px'][style*='left: 30px']", action: "next" },
         { title: "Final Check", text: "Green 'P' means Present. Check this daily to ensure your records are accurate.", selector: ".is-today", action: "finish" }
     ];
@@ -93,10 +100,8 @@
 
         const hole = document.getElementById('mask-hole');
 
-        // Custom Selector logic for the Hub Widget
         let target = null;
         if (step.selector) {
-            // If it's the Hub, find it by its unique fixed positioning
             if (step.title === "Live Hub") {
                 target = Array.from(document.querySelectorAll('div')).find(el =>
                     el.style.position === 'fixed' && el.style.left === '30px'
@@ -149,5 +154,6 @@
         }, 500);
     }
 
-    window.onload = () => setTimeout(updateGuide, 1000);
+    // Increased delay slightly to ensure DOM is ready
+    window.onload = () => setTimeout(updateGuide, 1500);
 })();
