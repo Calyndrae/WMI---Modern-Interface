@@ -1,47 +1,61 @@
-' =========================================
-' WMI - Modern Interface Installer (VBScript)
-' Requires Administrator Privileges
-' =========================================
+' Westlake Modern Interface (WMI) - Step-by-Step Installer
+' Developed by Calyndrae & Gemini
 
-If Not IsAdmin() Then
-    RequestAdmin
-    WScript.Quit
-End If
-
-Dim shell
 Set shell = CreateObject("WScript.Shell")
 
-MsgBox "欢迎使用 WMI Modern Interface 安装器" & vbCrLf & vbCrLf & _
-       "接下来将引导你完成安装。" & vbCrLf & _
-       "请按提示操作即可。", _
-       vbInformation, "WMI Installer"
+Dim repoRaw, folder, scripts, script, choice
 
-' ===== Step 1 =====
-shell.Run "https://github.com/Calyndrae/WMI---Modern-Interface/releases/latest"
+repoRaw = "https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/"
+folder = "Tempermonkey%20Scripts/"
 
-MsgBox "步骤 1 / 1" & vbCrLf & vbCrLf & _
-       "浏览器已打开。" & vbCrLf & _
-       "请完成下载 / 安装。" & vbCrLf & vbCrLf & _
-       "完成后，点击【确定】继续。", _
-       vbOKOnly + vbInformation, "WMI Installer"
+' Your official 10-script list
+scripts = Array(_
+    "WMI%20-%20%22Other%22%20Window.user.js", _
+    "WMI%20-%20Blank%20Subject%20Block%20Fix.user.js", _
+    "WMI%20-%20Clock.user.js", _
+    "WMI%20-%20Current%20Subject%20Block.user.js", _
+    "WMI%20-%20Guides.user.js", _
+    "WMI%20-%20Profile%20Customizer.user.js", _
+    "WMI%20-%20Subject%20Interaction.user.js", _
+    "WMI%20-%20Subject%20Tracker.user.js", _
+    "WMI%20-%20Virable%20NamePlaceHolder.user.js", _
+    "WMI%20-%20Web%20Edit%20Belonging%20Info.user.js" _
+)
 
-MsgBox "安装流程已完成！" & vbCrLf & vbCrLf & _
-       "如果界面未生效，请刷新网站或重新打开浏览器。", _
-       vbInformation, "完成"
+MsgBox "Welcome to the WMI Step-by-Step Installer." & vbCrLf & vbCrLf & _
+       "How it works:" & vbCrLf & _
+       "1. A browser window will open for a script." & vbCrLf & _
+       "2. Click 'Install' or 'Update' in your browser." & vbCrLf & _
+       "3. Come back to THIS window and click OK for the next one." & vbCrLf & vbCrLf & _
+       "Press OK to begin Step 1.", vbInformation, "WMI Installer"
 
-' ===== Functions =====
-Function IsAdmin()
-    On Error Resume Next
-    CreateObject("Shell.Application").ShellExecute "cmd.exe", "/c echo admin", "", "runas", 0
-    If Err.Number = 0 Then
-        IsAdmin = True
-    Else
-        IsAdmin = False
+' --- THE LOOP ---
+Dim count
+count = 1
+
+For Each script In scripts
+    ' Open the script in the default browser
+    shell.Run repoRaw & folder & script
+    
+    ' Pause the script and wait for the user to click OK
+    choice = MsgBox("Step " & count & " of 10 is open in your browser." & vbCrLf & vbCrLf & _
+                    "Script: " & Replace(script, "%20", " ") & vbCrLf & vbCrLf & _
+                    "Once you have clicked 'Install', click OK here to move to the next script.", _
+                    vbOKCancel + vbQuestion, "WMI Progress")
+    
+    ' If the user clicks Cancel, stop the whole installer
+    If choice = vbCancel Then 
+        MsgBox "Installation paused. You can restart the installer anytime.", vbExclamation, "WMI"
+        WScript.Quit
     End If
-    Err.Clear
-End Function
+    
+    count = count + 1
+Next
 
-Sub RequestAdmin()
-    CreateObject("Shell.Application").ShellExecute _
-        "wscript.exe", """" & WScript.ScriptFullName & """", "", "runas", 1
-End Sub
+' --- STYLEBOT FINAL STEP ---
+MsgBox "All scripts are done!" & vbCrLf & vbCrLf & _
+       "Now, please open your SCHOOL PORTAL first, open Stylebot extention, and now press next, to open the Stylebot CSS code. Please Copy and Paste it into Stylebot.on the SCHOOL PORTAL WEBSITE", vbInformation, "Final Step"
+
+shell.Run "https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Stylebot/WMI%20-%20Global%20Main%20Theme.css"
+
+MsgBox "Installation Complete! Refresh your school page to see the magic.", vbInformation, "Done!"
