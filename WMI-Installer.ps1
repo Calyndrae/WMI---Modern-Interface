@@ -1,47 +1,47 @@
-# ==============================
-# WMI - Modern Interface Installer
-# Windows 11 Only
-# ==============================
+' =========================================
+' WMI - Modern Interface Installer (VBScript)
+' Requires Administrator Privileges
+' =========================================
 
-# 强制切换到脚本所在目录（核心修复点）
-Set-Location -Path $PSScriptRoot
+If Not IsAdmin() Then
+    RequestAdmin
+    WScript.Quit
+End If
 
-Clear-Host
-$Host.UI.RawUI.WindowTitle = "WMI Installer"
+Dim shell
+Set shell = CreateObject("WScript.Shell")
 
-function Open-Web-And-Wait {
-    param (
-        [string]$Url,
-        [string]$Message
-    )
+MsgBox "欢迎使用 WMI Modern Interface 安装器" & vbCrLf & vbCrLf & _
+       "接下来将引导你完成安装。" & vbCrLf & _
+       "请按提示操作即可。", _
+       vbInformation, "WMI Installer"
 
-    Write-Host ""
-    Write-Host "----------------------------------------"
-    Write-Host $Message
-    Write-Host ""
-    Write-Host "1. 浏览器将自动打开"
-    Write-Host "2. 请完成下载 / 安装"
-    Write-Host "3. 完成后回到此窗口"
-    Write-Host "4. 按任意键继续"
-    Write-Host "----------------------------------------"
-    Write-Host ""
+' ===== Step 1 =====
+shell.Run "https://github.com/Calyndrae/WMI---Modern-Interface/releases/latest"
 
-    Start-Process $Url
-    Pause
-}
+MsgBox "步骤 1 / 1" & vbCrLf & vbCrLf & _
+       "浏览器已打开。" & vbCrLf & _
+       "请完成下载 / 安装。" & vbCrLf & vbCrLf & _
+       "完成后，点击【确定】继续。", _
+       vbOKOnly + vbInformation, "WMI Installer"
 
-# ===== Step 1 =====
-Open-Web-And-Wait `
-    "https://github.com/Calyndrae/WMI---Modern-Interface/releases/latest" `
-    "步骤 1：下载 WMI Modern Interface（Release 1.0）"
+MsgBox "安装流程已完成！" & vbCrLf & vbCrLf & _
+       "如果界面未生效，请刷新网站或重新打开浏览器。", _
+       vbInformation, "完成"
 
-# ===== Finish =====
-Write-Host ""
-Write-Host "========================================"
-Write-Host "WMI 安装流程已完成"
-Write-Host ""
-Write-Host "如果界面未生效："
-Write-Host "- 请刷新网站"
-Write-Host "- 或重新打开浏览器"
-Write-Host "========================================"
-Pause
+' ===== Functions =====
+Function IsAdmin()
+    On Error Resume Next
+    CreateObject("Shell.Application").ShellExecute "cmd.exe", "/c echo admin", "", "runas", 0
+    If Err.Number = 0 Then
+        IsAdmin = True
+    Else
+        IsAdmin = False
+    End If
+    Err.Clear
+End Function
+
+Sub RequestAdmin()
+    CreateObject("Shell.Application").ShellExecute _
+        "wscript.exe", """" & WScript.ScriptFullName & """", "", "runas", 1
+End Sub
