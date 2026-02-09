@@ -94,7 +94,7 @@
 
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
-            
+
             // Re-bind buttons
             document.getElementById('guide-next').onclick = handleNext;
             document.getElementById('guide-skip').onclick = completeTutorial;
@@ -103,8 +103,8 @@
         const hole = document.getElementById('mask-hole');
         let target = null;
         if (step.selector) {
-            target = (step.title === "Live Hub") ? 
-                Array.from(document.querySelectorAll('div')).find(el => el.style.position === 'fixed' && el.style.left === '30px') : 
+            target = (step.title === "Live Hub") ?
+                Array.from(document.querySelectorAll('div')).find(el => el.style.position === 'fixed' && el.style.left === '30px') :
                 document.querySelector(step.selector);
         }
 
