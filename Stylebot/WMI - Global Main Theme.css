@@ -1,0 +1,2421 @@
+
+
+/* 1. CLEAN CANVAS */
+body {
+   background-color: #f4f7f6 !important; /* Soft grey-blue background */
+   font-family: 'Inter', -apple-system, sans-serif !important;
+}
+
+
+/* 2. FLOATING HEADER (SIMPLIFIED) */
+.sk_header {
+   background: white !important;
+   border-bottom: 1px solid #eee !important;
+   padding: 10px 0 !important;
+}
+
+
+.sk_school_subheading { display: none !important; } /* Hide the long Maori subtitle for a cleaner look */
+
+
+/* 3. TRANSFORM COLUMNS INTO FLOATING CARDS */
+.calendar-grid {
+   display: flex !important;
+   gap: 15px !important;
+   border: none !important;
+   padding: 20px 0 !important;
+}
+
+
+.calendar-column {
+   background: white !important;
+   border: none !important;
+   border-radius: 16px !important;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+   flex: 1 !important;
+   overflow: hidden !important;
+}
+
+
+/* 4. MODERN DAY HEADERS */
+.calendar-columnheader {
+   background: #297536 !important; /* School Green as a top accent */
+   color: white !important;
+   padding: 15px !important;
+   border: none !important;
+   text-align: center !important;
+}
+
+
+.calendar-dayname { font-weight: 700 !important; text-transform: uppercase; font-size: 0.8rem !important; }
+
+
+/* 5. INDIVIDUAL PERIODS (THE "CLEAN" LOOK) */
+.calendar-day {
+   border: none !important;
+   border-bottom: 1px solid #f9f9f9 !important;
+   padding: 12px 15px !important;
+   transition: background 0.2s !important;
+}
+
+
+.calendar-day:hover {
+   background-color: #fcfcfc !important;
+}
+
+
+.calendar-day h6 {
+   color: #888 !important; /* Period 1, 2 text */
+   font-size: 0.7rem !important;
+   text-transform: uppercase;
+   margin-bottom: 4px !important;
+}
+
+
+.calendar-day strong {
+   color: #333 !important; /* Subject name: 10MAT */
+   font-size: 1.1rem !important;
+   display: block !important;
+}
+
+
+/* 6. BUTTON REDESIGN */
+.sk_btn {
+   border-radius: 12px !important;
+   padding: 8px 16px !important;
+   border: none !important;
+   background: #eee !important;
+   color: #555 !important;
+   font-weight: 600 !important;
+   box-shadow: none !important;
+}
+
+
+.sk_btn.active {
+   background: #297536 !important;
+   color: white !important;
+}
+
+
+/* 7. HIDE CLUTTER */
+.attendance-codes, .card.text-center.sk_border {
+   border: none !important;
+   background: transparent !important;
+   opacity: 0.6 !important;
+}
+
+
+/* 1. RESET HEADER TO STABLE POSITION */
+.sk_header {
+   position: relative !important; /* It stays at the top of the page, not the screen */
+   height: auto !important;
+   min-height: 70px !important;
+   padding: 15px 0 !important;
+   background: #ffffff !important;
+   border-bottom: 1px solid #e2e8f0 !important;
+   display: block !important;
+   top: auto !important; /* Removes any sticky/fixed positioning */
+}
+
+
+/* 2. ALIGN CONTENT WITHOUT FLOATING */
+.sk_header_content {
+   display: flex !important;
+   align-items: center !important;
+   max-width: 1100px !important;
+   margin: 0 auto !important;
+   padding: 0 20px !important;
+}
+
+
+/* 3. LOGO STABILITY */
+.sk_logo img {
+   height: 40px !important;
+   width: auto !important;
+   display: block !important;
+}
+
+
+/* 4. CLEAN TEXT LAYOUT */
+.sk_school_heading {
+   margin-left: 20px !important;
+}
+
+
+.sk_school_name {
+   font-size: 1.15rem !important;
+   font-weight: 700 !important;
+   color: #1a202c !important;
+   text-decoration: none !important;
+}
+
+
+.sk_school_subheading {
+   font-size: 0.75rem !important;
+   color: #718096 !important;
+   margin: 0 !important;
+}
+
+
+/* 5. REMOVE BACKGROUND CLUTTER */
+.header-bg-img {
+   display: none !important;
+}
+
+
+/* 6. ENSURE MAIN CONTENT DOESN'T JUMP */
+.main-wrapper {
+   padding-top: 0 !important;
+   margin-top: 20px !important;
+}
+
+
+/* 1. TRANSFORM NAV INTO A FLOATING DOCK */
+.sk_nav {
+   background: transparent !important;
+   margin: 20px auto !important;
+   max-width: 1100px !important;
+   padding: 0 10px !important;
+}
+
+
+.navbar {
+   background: #ffffff !important;
+   border-radius: 50px !important; /* The "Capsule" look */
+   padding: 10px 25px !important;
+   box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+   border: 1px solid #e2e8f0 !important;
+   display: flex !important;
+   justify-content: space-between !important;
+}
+
+
+/* 2. STYLE NAV LINKS */
+.nav-link {
+   color: #4a5568 !important;
+   font-weight: 600 !important;
+   font-size: 0.9rem !important;
+   padding: 8px 15px !important;
+   transition: all 0.2s ease !important;
+   border-radius: 20px !important;
+}
+
+
+.nav-link:hover {
+   color: #297536 !important;
+   background: rgba(41, 117, 54, 0.05) !important;
+}
+
+
+.nav-link.active {
+   color: #297536 !important;
+   background: rgba(41, 117, 54, 0.1) !important;
+}
+
+
+/* 3. PROFILE / ACCOUNT SECTION */
+.account-item {
+   display: flex !important;
+   align-items: center !important;
+   gap: 10px !important;
+}
+
+
+.avatar {
+   width: 32px !important;
+   height: 32px !important;
+   border-radius: 50% !important;
+   border: 2px solid #297536 !important;
+   object-fit: cover !important;
+}
+
+
+/* 4. CLEAN UP DROPDOWN MENUS */
+.nav-menu.sk_nav {
+   background: #ffffff !important;
+   border-radius: 15px !important;
+   box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+   border: 1px solid #e2e8f0 !important;
+   padding: 10px !important;
+   margin-top: 15px !important;
+}
+
+
+/* 5. HIDE THE HAMBURGER MENU TEXT ON DESKTOP */
+.navbar-toggler {
+   border: none !important;
+}
+
+
+/* FORCE NAVIGATION TEXT TO BE VISIBLE */
+.sk_nav .nav-link,
+.sk_nav_text,
+.main-nav .nav-link,
+.user-nav .nav-link {
+   color: #1e293b !important; /* Dark slate gray */
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+
+/* CHANGE COLOR ON HOVER SO YOU KNOW IT'S CLICKABLE */
+.sk_nav .nav-link:hover {
+   color: #297536 !important; /* Westlake Green */
+   background: rgba(41, 117, 54, 0.08) !important;
+}
+
+
+/* IF THE LINK IS ACTIVE (LIKE THE ATTENDANCE PAGE) */
+.sk_nav .nav-link.active {
+   color: #297536 !important;
+   font-weight: 700 !important;
+}
+
+
+/* FIX DROPDOWN ICON COLOR (THE TINY ARROWS) */
+.dropdown-toggle::after {
+   border-top-color: #1e293b !important;
+}
+
+
+/* Remove the large attendance legend table */
+.attendance-codes {
+   display: none !important;
+}
+
+
+/* Also hiding the iCal/Google Calendar link box to keep it minimal */
+.card.text-center.sk_border.mb-4 {
+   display: none !important;
+}
+
+
+/* 1. MAKE TIME VISIBLE (e.g., 8:45am) */
+.calendar-day .text-muted,
+.calendar-day small {
+   color: #64748b !important; /* Slate gray */
+   opacity: 1 !important;
+}
+
+
+/* 2. MAKE CLASSROOM VISIBLE (e.g., S11, C01) */
+/* These usually sit at the bottom of the card */
+.calendar-day .d-flex.align-items-center.justify-content-between small {
+   color: #475569 !important; /* Slightly darker gray for better contrast */
+   font-weight: 600 !important;
+}
+
+
+/* 3. OPTIONAL: GIVE THE SUBJECT NAME (10MAT) A BOOST */
+.calendar-day strong {
+   color: #0f172a !important; /* Almost black */
+}
+
+
+/* 4. CLEAN UP THE "AM / PM" SLOTS */
+/* Since they are empty, let's make them even more subtle or hide them */
+.non-period h6,
+.non-period strong {
+   color: #cbd5e1 !important; /* Very light gray */
+}
+
+
+/* 1. Target the Home Page Welcome Content */
+.sk_page.sk-main-content,
+.sk_text.sk_page {
+   color: #718096 !important; /* Soft slate/light grey */
+   line-height: 1.6 !important;
+   font-size: 0.95rem !important;
+}
+
+
+/* 2. Highlight specific parts slightly so they don't disappear */
+.sk_page.sk-main-content strong,
+.sk_page.sk-main-content b {
+   color: #4a5568 !important; /* Slightly darker grey for emphasis */
+}
+
+
+/* 3. Style the email link to be a subtle green (Westlake style) */
+.sk_page.sk-main-content a {
+   color: #297536 !important;
+   text-decoration: underline !important;
+   opacity: 0.8 !important;
+}
+
+
+/* 4. Optional: Add a soft border and padding to make it look like a neat "Notice" box */
+.sk_page.sk-main-content {
+   background: #ffffff !important;
+   padding: 25px !important;
+   border-radius: 15px !important;
+   border: 1px solid #edf2f7 !important;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
+}
+
+
+/* 2. RECLAIM THE SPACE */
+/* This ensures the remaining classes expand or fit neatly without gaps */
+.tt-day-wrap {
+   display: flex !important;
+   flex-direction: column !important;
+   gap: 8px !important;
+}
+
+
+/* 3. CLEAN UP THE BOTTOM OF THE DAY COLUMN */
+.calendar-column {
+   padding-bottom: 10px !important;
+}
+
+
+/* 1. GLOBAL BACKGROUND RESET */
+body,
+.main-wrapper,
+.sk-main,
+.sk_page,
+.container,
+#header,
+.sk_header {
+   background-color: #ffffff !important;
+   background-image: none !important;
+}
+
+
+/* 2. REMOVE ANY LINGERING DIVIDER LINES OR SHADOWS */
+.sk_border,
+.sk_table,
+.calendar-grid {
+   border: none !important;
+}
+
+
+/* 3. ENSURE TEXT CONTRAST */
+/* Since the background is now pure white, we make the text a sharp slate color */
+.sk_school_name,
+.calendar-dayname,
+.sk_heading {
+   color: #1a202c !important;
+}
+
+
+/* 4. CLEAN UP THE MAIN CONTENT AREA */
+.sk-main-content {
+   background: #ffffff !important;
+   box-shadow: none !important;
+   border: none !important;
+}
+/* 1. APPLY DEEP SHADOW TO LESSON CARDS */
+.calendar-day {
+   background: #ffffff !important;
+   border-radius: 16px !important; /* Extra rounded for a modern look */
+   margin-bottom: 12px !important;
+   padding: 18px !important;
+  
+   /* Elegant, layered shadow */
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08),
+               0 4px 6px rgba(0, 0, 0, 0.04) !important;
+  
+   border: 1px solid rgba(0, 0, 0, 0.02) !important; /* Almost invisible border */
+   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+
+/* 2. HOVER EFFECT (Optional: Makes it interactive) */
+.calendar-day:hover {
+   transform: translateY(-3px) !important;
+   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
+  
+}
+
+
+/* 3. GIVE "TODAY" AN EXTRA GLOW */
+.is-today .calendar-day {
+   box-shadow: 0 10px 25px rgba(41, 117, 54, 0.15) !important;
+   border-left: 5px solid #297536 !important;
+}
+
+
+/* 4. SPACE OUT THE COLUMNS */
+.calendar-grid {
+   gap: 25px !important; /* More space between days */
+   padding: 20px !important;
+}
+
+
+/* TARGET THE DATE BOXES */
+.calendar-columnheader {
+   border-radius: 10px !important;
+   margin-bottom: 10px !important;
+   /* This ensures the corners actually clip if there is a background color */
+   overflow: hidden !important;
+}
+
+
+/* TARGET THE INNER WRAPPER IF NECESSARY */
+.calendar-columnheader > div {
+   border-radius: 15px !important;
+}
+
+
+/* TARGET THE BOTTOM ROW CONTAINING THE CLASSROOM */
+.calendar-day .d-flex.align-items-center.justify-content-between:last-child {
+   padding-top: 2px !important; /* Adjust this number to move it further down */
+   margin-top: 5px !important;
+}
+
+
+/* 1. HIDE ATTENDANCE ICONS BY DEFAULT */
+.attendance-icon {
+   opacity: 0 !important;
+   transition: opacity 0.2s ease-in-out !important; /* Smooth fade in */
+}
+
+
+/* 2. SHOW ICON WHEN HOVERING OVER THE CLASS CARD */
+.calendar-day:hover .attendance-icon {
+   opacity: 1 !important;
+}
+
+
+/* 3. POSITIONING TWEAK */
+/* This ensures the icon doesn't shift other text when it appears */
+.calendar-day .h-100 {
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+}
+
+
+/* 4. OPTIONAL: SCALE EFFECT */
+/* Makes the "P" or "L" pop out slightly when you hover */
+.calendar-day:hover .attendance-icon {
+   transform: scale(1.1);
+}
+
+
+html {
+   scroll-behavior: smooth !important;
+}
+
+
+/* 1. CENTER THE HEADER AND SWITCHER */
+.calendar-header {
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+   position: relative !important;
+   padding: 20px 0 !important;
+}
+
+
+.calendar-actions {
+   display: flex !important;
+   gap: 15px !important;
+   align-items: center !important;
+   padding: 8px 16px !important;
+   background: #ffffff !important;
+   border-radius: 30px !important;
+   /* Static shadow */
+   box-shadow: 0 4px 10px rgba(0,0,0,0.03) !important;
+   transition: all 0.3s ease !important;
+}
+
+
+/* 2. BUTTON HOVER ANIMATIONS */
+.calendar-actions a.sk_btn,
+.calendar-actions span.week-btn {
+   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+   border-radius: 20px !important;
+}
+
+
+/* THE LIFT EFFECT: When you hover the buttons */
+.calendar-actions a.sk_btn:hover {
+   background-color: #f1f5f9 !important; /* Soft grey background */
+   transform: translateY(-2px) !important; /* Moves it up slightly */
+   color: #297536 !important; /* Turns text Westlake Green */
+   box-shadow: 0 5px 12px rgba(0,0,0,0.1) !important;
+}
+
+
+/* THE ACTIVE WEEK GLOW */
+.calendar-actions .active {
+   background: #297536 !important;
+   color: white !important;
+   box-shadow: 0 4px 10px rgba(41, 117, 54, 0.3) !important;
+}
+
+
+.calendar-actions .active:hover {
+   transform: scale(1.05) !important; /* Slightly grows when hovered */
+   box-shadow: 0 6px 15px rgba(41, 117, 54, 0.4) !important;
+}
+
+
+/* 3. PUSH ICONS TO THE SIDE */
+.calendar-header-icons {
+   position: absolute !important;
+   right: 10px !important;
+}
+
+
+
+
+/* 1. 将所有表格转化为圆角卡片流 */
+.sk_table {
+   border: none !important;
+   background: #ffffff !important;
+   border-radius: 20px !important;
+   overflow: hidden !important;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+   margin-bottom: 30px !important;
+}
+
+
+/* 2. 表头美化 (深绿背景) */
+.sk_thead th, .sk_thead td {
+   background-color: #297536 !important; /* 西湖男校绿 */
+   color: white !important;
+   border: none !important;
+   padding: 15px !important;
+   font-weight: 600 !important;
+   letter-spacing: 0.5px !important;
+}
+
+
+/* 3. 单元格间距与线条 */
+.sk_table td, .sk_table th {
+   padding: 15px !important;
+   border-bottom: 1px solid #f1f5f9 !important;
+   vertical-align: middle !important;
+}
+
+
+/* 4. 成绩等级配色 (让分数一眼可见) */
+.notachieved, .result-value:contains("Not Yet Met") {
+   color: #ef4444 !important; /* 红色 */
+   font-weight: bold !important;
+}
+
+
+.achieved, .result-value:contains("Requirements Met") {
+   color: #10b981 !important; /* 绿色 */
+   font-weight: bold !important;
+}
+
+
+.merit {
+   color: #0ea5e9 !important; /* 蓝色 */
+   font-weight: bold !important;
+}
+
+
+.excellence {
+   color: #f59e0b !important; /* 金色 */
+   font-weight: bold !important;
+}
+
+
+/* 5. 详细成绩列表 (Stored Results) 的特殊处理 */
+.table-ncea-details tr:hover {
+   background-color: #f8fafc !important; /* 悬停变色 */
+}
+
+
+.result_title b {
+   font-size: 1.1rem !important;
+   color: #1e293b !important;
+}
+
+
+kbd {
+   background: #e2e8f0 !important;
+   color: #475569 !important;
+   border-radius: 4px !important;
+   padding: 2px 6px !important;
+   box-shadow: none !important;
+}
+
+
+/* 6. 图表容器美化 */
+.chart {
+   background: white !important;
+   padding: 20px !important;
+   border-radius: 20px !important;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+   text-align: center !important;
+}
+
+
+/* 7. 隐藏不需要的线条和过时的样式 */
+.ncea-summary table, .ue-literacy-table {
+   border-collapse: separate !important;
+   border-spacing: 0 !important;
+}
+
+
+/* 1. 修改导航按钮为深绿色 */
+.calendar-nav .sk_btn {
+   background-color: #1a4d24 !important; /* 更加稳重的深绿色 */
+   border: none !important;
+   border-radius: 12px !important;
+   padding: 8px !important;
+   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+   box-shadow: 0 4px 10px rgba(26, 77, 36, 0.2) !important;
+}
+
+
+/* 2. 图标颜色设为白色，增强对比 */
+.calendar-nav .sk_btn svg {
+   fill: #ffffff !important;
+   color: #ffffff !important;
+   width: 22px !important;
+   height: 22px !important;
+}
+
+
+/* 3. 悬停效果：颜色变亮一点并轻微浮起 */
+.calendar-nav .sk_btn:hover {
+   background-color: #297536 !important; /* 西湖男校标准绿 */
+   transform: translateY(-2px) !important;
+   box-shadow: 0 6px 15px rgba(41, 117, 54, 0.3) !important;
+}
+
+
+/* 4. 移除多余的边框线 */
+th.calendar-nav {
+   border: none !important;
+}
+
+
+/* 5. 调整中间月份标题的颜色，使其更协调 */
+.top-row .sk_heading {
+   color: #1a4d24 !important;
+   font-weight: 700 !important;
+}
+
+
+/* 1. 日历整体容器：移除边框，增加阴影 */
+#calendar .table-calendar {
+   border-collapse: separate !important;
+   border-spacing: 8px !important; /* 增加格子之间的间距，形成卡片感 */
+   border: none !important;
+   background: transparent !important;
+}
+
+
+/* 2. 星期标题 (S M T W...) 样式调整 */
+.sk_thead th {
+   background: transparent !important;
+   color: #64748b !important; /* 优雅的灰蓝色 */
+   border: none !important;
+   font-size: 0.85rem !important;
+   padding-bottom: 15px !important;
+}
+
+
+/* 3. 日期格子：基础卡片样式 */
+#calendar .calendar-day {
+   background: #ffffff !important;
+   border: none !important;
+   border-radius: 12px !important;
+   height: 80px !important; /* 增加高度，看起来更高级 */
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+   transition: all 0.2s ease !important;
+}
+
+
+/* 4. 悬停效果：日期卡片浮起 */
+#calendar .calendar-day:hover {
+   transform: translateY(-4px) !important;
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+   background: #f8fafc !important;
+}
+
+
+/* 5. 今天的日期 (Highlight)：深绿色主题 */
+.calendar-date.highlight {
+   background: #1a4d24 !important; /* 深绿色背景 */
+   color: #ffffff !important;      /* 白色数字 */
+   width: 35px !important;
+   height: 35px !important;
+   line-height: 35px !important;
+   border-radius: 50% !important;  /* 圆形高亮 */
+   display: inline-block !important;
+   text-align: center !important;
+   font-weight: bold !important;
+   box-shadow: 0 4px 10px rgba(26, 77, 36, 0.3) !important;
+}
+
+
+/* 6. 普通日期数字样式 */
+.calendar-date {
+   font-size: 1.1rem !important;
+   font-weight: 500 !important;
+   color: #1e293b !important;
+}
+
+
+/* 7. 去掉单元格的默认边框线 */
+#calendar td.sk_border, #calendar th.sk_border {
+   border: none !important;
+}
+
+
+/* 1. 核心修复：允许卡片高度随内容自动扩展 */
+#calendar .calendar-day {
+   display: flex !important;
+   flex-direction: column !important;
+   align-items: center !important;
+   justify-content: flex-start !important;
+   height: auto !important;          /* 关键：取消固定高度 */
+   min-height: 100px !important;     /* 设置最小高度，保持整齐 */
+   padding: 12px 8px !important;    /* 增加上下内边距 */
+   border: none !important;
+   border-radius: 15px !important;
+   background: #ffffff !important;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+   overflow: visible !important;     /* 确保文字不会被裁剪 */
+}
+
+
+/* 2. 移除背景，仅显示深灰色文字 */
+.calendar-events .badge {
+   background: none !important;
+   background-color: transparent !important;
+   color: #475569 !important;        /* 深灰色文字 */
+   font-size: 0.75rem !important;
+   font-weight: 600 !important;
+   white-space: normal !important;   /* 允许长文字换行 */
+   line-height: 1.3 !important;      /* 增加行高，防止重叠 */
+   text-align: center !important;
+   padding: 5px 0 !important;
+   display: block !important;
+   border: none !important;
+}
+
+
+/* 3. 优化虚线样式，增加间距 */
+.calendar-events {
+   margin-top: 8px !important;
+   padding-top: 8px !important;
+   border-top: 1px dashed #e2e8f0 !important;
+   width: 90% !important;
+}
+
+
+/* 禁止全局文字选择 */
+html, body {
+   -webkit-user-select: none !important; /* Safari */
+   -moz-user-select: none !important;    /* Firefox */
+   -ms-user-select: none !important;     /* IE10+ */
+   user-select: none !important;         /* 标准语法 */
+}
+
+
+/* 确保输入框和文本域仍然可以正常输入 */
+input, textarea {
+   -webkit-user-select: text !important;
+   -moz-user-select: text !important;
+   -ms-user-select: text !important;
+   user-select: text !important;
+}
+
+
+/* 1. 将每个科目的标题行改为美观的分割线样式 */
+.table-ncea-details .sk_thead th {
+   background: #f1f5f9 !important;
+   color: #1a4d24 !important; /* 西湖绿标题 */
+   padding: 12px 15px !important;
+   font-size: 1.1rem !important;
+   border-radius: 8px !important;
+   border: none !important;
+   display: block !important;
+   margin-top: 25px !important;
+   margin-bottom: 10px !important;
+   box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+
+
+/* 2. 移除原始表格的杂乱线条 */
+.table-ncea-details, .table-ncea-details td {
+   border: none !important;
+}
+
+
+/* 3. 每一项评估结果改为“条纹卡片”样式 */
+.table-ncea-details tr:not(.sk_thead) {
+   display: flex !important;
+   justify-content: space-between !important;
+   align-items: center !important;
+   background: #ffffff !important;
+   margin-bottom: 6px !important;
+   padding: 10px 15px !important;
+   border-radius: 10px !important;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.03) !important;
+   transition: all 0.2s ease !important;
+}
+
+
+.table-ncea-details tr:not(.sk_thead):hover {
+   transform: translateX(5px) !important; /* 悬停时轻轻右移 */
+   background: #f8fafc !important;
+}
+
+
+/* 4. 左侧标题 (Term X Week Y) 样式 */
+.result_title {
+   flex: 1 !important;
+   font-size: 0.95rem !important;
+   color: #334155 !important;
+}
+
+
+/* 5. 核心：Requirements Met (达标) 高亮显示 */
+td.result-value {
+   font-weight: 700 !important;
+   padding: 5px 12px !important;
+   border-radius: 6px !important;
+   font-size: 0.85rem !important;
+   text-transform: uppercase !important;
+   min-width: 180px !important;
+   text-align: right !important;
+}
+
+
+/* 达标：绿色背景+发光 */
+td.result-value:contains("Requirements Met") {
+   color: #059669 !important;
+   background: #ecfdf5 !important;
+   border: 1px solid #10b981 !important;
+}
+
+
+/* 未达标：淡灰色文字 (不抢眼) */
+td.result-value:contains("Requirements Not Yet Met") {
+   color: #94a3b8 !important;
+   background: #f1f5f9 !important;
+}
+
+
+/* 6. 装饰 KBD 标签 (那个小 'S') */
+kbd {
+   background: #1a4d24 !important;
+   color: white !important;
+   border: none !important;
+   padding: 2px 6px !important;
+   margin-right: 8px !important;
+   font-family: inherit !important;
+}
+
+
+/* 7. 自动隐藏空的 Credits 单元格以节省空间 */
+.result-credits:empty {
+   display: none !important;
+}
+
+
+/* 1. 彻底隐藏所有烦人的空单元格 */
+.table-ncea-details td:empty,
+.table-ncea-details td[colspan="2"]:empty {
+   display: none !important;
+}
+
+
+/* 2. 修正科目标题行的显示 (让 9ART 等标题占满整行) */
+.table-ncea-details tr.sk_thead {
+   display: block !important;
+   width: 100% !important;
+   background: transparent !important; /* 移除外层背景 */
+}
+
+
+.table-ncea-details tr.sk_thead th {
+   display: block !important;
+   width: 100% !important;
+   margin-top: 20px !important;
+   background-color: #1a4d24 !important; /* 深绿背景 */
+   color: white !important;
+   border-radius: 8px !important;
+   padding: 10px 15px !important;
+   text-align: left !important;
+}
+
+
+/* 3. 确保结果行 (Term X Week Y) 的对齐非常整齐 */
+.table-ncea-details tr:not(.sk_thead) {
+   display: flex !important;
+   width: 100% !important;
+   justify-content: space-between !important; /* 文字靠左，状态靠右 */
+   align-items: center !important;
+   padding: 12px 15px !important;
+   border-bottom: 1px solid #f1f5f9 !important; /* 改用细线分割，比卡片更整齐 */
+   gap: 20px !important;
+}
+
+
+/* 4. 强制让左边的文字占据剩余空间，右边的状态保持固定 */
+.result_title {
+   flex-grow: 1 !important;
+}
+
+
+.result-value {
+   flex-shrink: 0 !important;
+   white-space: nowrap !important; /* 防止状态文字换行 */
+}
+
+
+/* 1. 首页容器美化 */
+.page-home .container {
+   max-width: 900px !important;
+   padding: 40px !important;
+   background: #ffffff !important;
+   border-radius: 24px !important;
+   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.05) !important;
+   margin-top: 30px !important;
+}
+
+
+/* 2. 标题与段落优化 */
+.page-home p {
+   color: #1e293b !important;
+   font-size: 1.1rem !important;
+   font-weight: 500 !important;
+   margin-bottom: 1.5rem !important;
+   line-height: 1.6 !important;
+}
+
+
+/* 重点：首句欢迎语加粗 */
+.page-home p:first-child {
+   font-size: 1.8rem !important;
+   font-weight: 800 !important;
+   color: #1a4d24 !important; /* 西湖绿 */
+   letter-spacing: -1px !important;
+}
+
+
+/* 3. 列表（List）重构：去除原生点点，改为现代信息条目 */
+.page-home ul {
+   background: transparent !important;
+   padding: 0 !important;
+   margin-bottom: 2rem !important;
+   list-style: none !important; /* 去除原生圆点 */
+}
+
+
+.page-home li {
+   background: #f8fafc !important;
+   margin-bottom: 10px !important;
+   padding: 15px 20px !important;
+   border-radius: 12px !important;
+   color: #475569 !important;
+   font-size: 0.95rem !important;
+   border-left: 4px solid #1a4d24 !important; /* 左侧绿色装饰条 */
+   display: flex !important;
+   align-items: center !important;
+}
+
+
+/* 4. 隐藏多余的样式干扰 */
+.page-home ul[style] {
+   background-color: transparent !important;
+   font-family: inherit !important;
+}
+
+
+/* 5. SchoolBridge 悬浮卡片按钮重排 */
+.home-items {
+   margin-top: 40px !important;
+   border-top: 2px solid #f1f5f9 !important;
+   padding-top: 30px !important;
+}
+
+
+.custom-tile-item {
+   border: none !important;
+   padding: 0 !important;
+}
+
+
+.custom-tile {
+   display: flex !important;
+   align-items: center !important;
+   background: #1a4d24 !important; /* 深绿背景 */
+   padding: 25px !important;
+   border-radius: 16px !important;
+   text-decoration: none !important;
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+   box-shadow: 0 10px 25px rgba(26, 77, 36, 0.2) !important;
+}
+
+
+.custom-tile:hover {
+   transform: translateY(-5px) !important;
+   box-shadow: 0 15px 35px rgba(26, 77, 36, 0.3) !important;
+   background: #236931 !important;
+}
+
+
+/* 6. 按钮内的图标与文字 */
+.custom-tile-icon {
+   background: rgba(255, 255, 255, 0.1) !important;
+   padding: 12px !important;
+   border-radius: 12px !important;
+   margin-right: 20px !important;
+}
+
+
+.custom-tile-icon svg {
+   width: 40px !important;
+   height: 40px !important;
+   fill: #ffffff !important;
+}
+
+
+.custom-tile-title {
+   color: #ffffff !important;
+   font-size: 1.4rem !important;
+   font-weight: 700 !important;
+   margin: 0 !important;
+}
+
+
+.custom-tile-text {
+   color: rgba(255, 255, 255, 0.8) !important;
+   font-size: 0.9rem !important;
+   margin: 4px 0 0 0 !important;
+}
+
+
+/* 1. 让按钮容器变为 Flex 布局并居中 */
+.home-items {
+   display: flex !important;
+   justify-content: center !important; /* 水平居中 */
+   align-items: center !important;
+   padding: 0 !important;
+   margin-top: 40px !important;
+   border-top: 1px solid #f1f5f9 !important; /* 增加一条淡色的分割线 */
+   padding-top: 30px !important;
+}
+
+
+/* 2. 移除列表项的默认样式 */
+.custom-tile-item {
+   list-style: none !important;
+   width: auto !important;
+}
+
+
+/* 3. 确保按钮本身是自适应宽度且居中对齐文字 */
+.custom-tile {
+   display: flex !important;
+   margin: 0 auto !important; /* 再次确保间距居中 */
+   min-width: 320px !important;
+   justify-content: flex-start !important; /* 图标和文字依然靠左对齐，但整体在页面中心 */
+   padding: 18px 30px !important;
+}
+
+
+/* 4. 微调欢迎页整体容器，确保文字也居中（可选，如果你想全居中） */
+.page-home .container {
+   text-align: center !important; /* 让顶部的文字和列表也居中 */
+}
+
+
+/* 5. 调整列表项的文字对齐，使其在居中模式下也整齐 */
+.page-home li {
+   justify-content: center !important; /* 列表文字居中 */
+   max-width: 600px !important;   /* 限制列表宽度，防止太长 */
+   margin-left: auto !important;
+   margin-right: auto !important;
+}
+
+
+/* 1. 移除干扰：清理多余背景和边框 */
+.page-student .sk_table,
+.page-student .sk_thead,
+.page-student .sk_table tr,
+.page-student .sk_table td,
+.page-student .sk_table th {
+   background: transparent !important;
+   border: none !important;
+   box-shadow: none !important;
+}
+
+
+/* 2. 容器卡片化 */
+.page-student .container {
+   max-width: 800px !important;
+   background: #ffffff !important;
+   border-radius: 20px !important;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+   padding: 0 !important;
+   margin-top: 30px !important;
+   overflow: hidden !important;
+}
+
+
+/* 3. 顶部大标题 (Student) */
+.page-student thead tr:first-child th {
+   display: block !important;
+   background: #1a4d24 !important; 
+   color: #ffffff !important;
+   padding: 25px 35px !important;
+   font-size: 1.5rem !important;
+   font-weight: 800 !important;
+   text-align: left !important;
+}
+
+
+/* 4. 隐藏：无用的空行、重复的名字表头、中间的全名列 */
+.page-student thead tr:nth-child(2),               /* 隐藏 First/Last Name 表头 */
+.page-student tr.sk_thead:has(th[colspan="4"]:empty), /* 隐藏空白分割行 */
+.page-student tr td:nth-child(3) {                  /* 隐藏重复的全名 YuXuan YuXuan Wang */
+   display: none !important;
+}
+
+
+/* 5. 每一行信息的 Flex 布局 */
+.page-student tbody tr {
+   display: flex !important;
+   align-items: center !important;
+   padding: 18px 35px !important;
+   border-bottom: 1px solid #f1f5f9 !important;
+   width: 100% !important;
+}
+
+
+/* 6. 左侧标签 (Label) 统一样式 */
+.page-student tbody th {
+   flex: 0 0 220px !important; /* 强制所有标签对齐 */
+   font-size: 0.75rem !important;
+   font-weight: 700 !important;
+   color: #94a3b8 !important;
+   text-transform: uppercase !important;
+   letter-spacing: 1px !important;
+   text-align: left !important;
+}
+
+
+/* 7. 右侧内容 (Value) 统一样式 */
+.page-student tbody td {
+   flex: 1 !important;
+   font-size: 1.05rem !important;
+   font-weight: 600 !important;
+   color: #1e293b !important;
+   text-align: left !important;
+}
+
+
+/* 8. 修复名字合并显示 */
+.page-student tr:has(td) td:nth-child(2),
+.page-student tr:has(td) td:nth-child(4) {
+   display: inline-block !important;
+   width: auto !important;
+   margin-right: 8px !important; /* 姓和名之间的空格 */
+   color: #1a4d24 !important;    /* 名字用深绿高亮 */
+}
+
+
+/* 9. 隐藏空白的信息行 (比如空的手机号、邮箱) */
+.page-student tbody tr:has(td:empty) {
+   /* display: none !important; */
+}
+
+
+/* 1. 给每一行增加左侧的“活动感”指示线 (只有悬停时出现) */
+.page-student tbody tr {
+   position: relative !important;
+   border-bottom: 1px solid #f8fafc !important; /* 更淡的底线 */
+   transition: all 0.3s ease !important;
+}
+
+
+.page-student tbody tr::before {
+   content: "" !important;
+   position: absolute !important;
+   left: 0 !important;
+   top: 20% !important;
+   height: 60% !important;
+   width: 3px !important;
+   background: #1a4d24 !important;
+   border-radius: 0 4px 4px 0 !important;
+   opacity: 0 !important; /* 默认隐藏 */
+   transition: opacity 0.3s ease !important;
+}
+
+
+.page-student tbody tr:hover::before {
+   opacity: 1 !important; /* 鼠标移上去时，左侧亮起一条绿线 */
+}
+
+
+/* 2. 在 Label 和 Value 之间增加一条非常淡的竖向分割线 */
+.page-student tbody th {
+   border-right: 1px solid #f1f5f9 !important; /* 细竖线 */
+   margin-right: 25px !important;
+   padding-right: 15px !important;
+}
+
+
+/* 3. 给顶部标题增加一个微弱的内阴影，增加深度感 */
+.page-student thead tr:first-child th {
+   box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1) !important;
+   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+   border-bottom: 4px solid #143a1b !important; /* 底部深绿封边 */
+}
+
+
+/* 4. 优化背景，增加一个淡淡的条纹效果 (Zebra Stripes) */
+.page-student tbody tr:nth-child(even) {
+   background-color: #fafbfc !important;
+}
+
+
+/* 5. 增强卡片整体的立体感 */
+.page-student .container {
+   border: 1px solid #eef2f6 !important;
+   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+
+/* 锁定第 6 行：应用模糊滤镜 */
+.page-student tbody tr:nth-child(6) td {
+   filter: blur(6px) !important; /* 调整像素值可以改变模糊程度 */
+   transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+   user-select: none !important; /* 防止模糊时被复制 */
+}
+
+
+/* 鼠标悬停时：瞬间清晰 */
+.page-student tbody tr:nth-child(6):hover td {
+   filter: blur(0px) !important;
+   user-select: text !important; /* 恢复清晰后允许选中 */
+}
+
+
+/* 1. Remove all green backgrounds from medical table headers and rows */
+.page-medical .sk_thead,
+.page-medical .sk_thead th,
+.page-medical tr.sk_thead,
+.page-medical table.sk_table thead tr th {
+   background: transparent !important;
+   background-color: transparent !important;
+   color: inherit !important; /* Keeps text color original */
+}
+
+
+/* 2. Fix the specific rows that turned green in your screenshot */
+.page-medical .sk_table tbody tr,
+.page-medical .sk_table td,
+.page-medical .sk_table th {
+   background: transparent !important;
+   background-color: transparent !important;
+}
+
+
+/* 3. Ensure text is visible (sets it to a dark color if it was white) */
+.page-medical td,
+.page-medical th {
+   color: #333 !important;
+}
+
+
+/* 1. Remove ALL green backgrounds from both pages */
+.page-medical .sk_thead,
+.page-medical .sk_thead th,
+.page-medical tr.sk_thead,
+.page-medical .sk_table td,
+.page-medical .sk_table th,
+.page-emergency-contacts .sk_thead,
+.page-emergency-contacts .sk_thead th,
+.page-emergency-contacts tr.sk_thead,
+.page-emergency-contacts .sk_table td,
+.page-emergency-contacts .sk_table th {
+   background: transparent !important;
+   background-color: transparent !important;
+   color: #333 !important; /* Forces text to stay dark/visible */
+}
+
+
+/* 2. Add clean lines so you can still tell the rows apart */
+.page-medical tr,
+.page-emergency-contacts tr {
+   border-bottom: 1px solid #eee !important;
+}
+
+
+/* 3. Visual Confirmation when you click a row (Stylebot Only) */
+/* This shows a small message at the bottom center when you click/hold */
+
+
+/* 4. Highlight the row briefly when clicked */
+.page-medical tbody tr:active,
+.page-emergency-contacts tbody tr:active {
+   background-color: #f0f0f0 !important;
+}
+/* Delete the Health (General) tab button */
+.page-medical .nav-item {
+   display: none !important;
+}
+
+
+/* 1. CONTAINER & FORM SPACING */
+.page-contact-us .container {
+   max-width: 700px !important; /* Makes the form easier to read */
+   background: #ffffff !important;
+   padding: 30px !important;
+   border-radius: 16px !important;
+}
+
+
+/* 2. LABELS - Small, bold, and professional */
+.page-contact-us label {
+   font-size: 0.85rem !important;
+   font-weight: 700 !important;
+   color: #64748b !important; /* Slate grey */
+   text-transform: uppercase !important;
+   letter-spacing: 0.5px !important;
+   margin-bottom: 8px !important;
+   display: block !important;
+}
+
+
+/* 3. INPUT FIELDS & TEXTAREA */
+.page-contact-us .form-control {
+   background: #f8fafc !important; /* Very light grey background */
+   border: 1px solid #e2e8f0 !important;
+   border-radius: 10px !important;
+   padding: 12px 15px !important;
+   font-size: 1rem !important;
+   color: #1e293b !important;
+   box-shadow: none !important;
+   transition: all 0.2s ease !important;
+}
+
+
+/* Focus effect: Blue-grey border when typing */
+.page-contact-us .form-control:focus {
+   background: #ffffff !important;
+   border-color: #94a3b8 !important;
+   outline: none !important;
+}
+
+
+/* 4. THE SUBMIT BUTTON - Clean Westlake Green */
+.page-contact-us .btn-success,
+.page-contact-us .sk_btn {
+   background-color: #1a4d24 !important; /* Westlake Deep Green */
+   border: none !important;
+   border-radius: 12px !important;
+   padding: 14px 30px !important;
+   font-weight: 700 !important;
+   font-size: 1rem !important;
+   letter-spacing: 0.5px !important;
+   box-shadow: 0 4px 12px rgba(26, 77, 36, 0.2) !important;
+   width: auto !important;
+   transition: all 0.2s ease !important;
+}
+
+
+.page-contact-us .btn-success:hover {
+   background-color: #297536 !important; /* Slightly lighter on hover */
+   transform: translateY(-2px) !important;
+   box-shadow: 0 6px 15px rgba(26, 77, 36, 0.3) !important;
+}
+
+
+/* 5. REMOVE ANY LINGERING GREEN BACKGROUNDS */
+.page-contact-us .sk_heading,
+.page-contact-us .container {
+   background-image: none !important;
+}
+
+
+/* Ensure the "Send Message" button text is pure white */
+.page-contact-us .btn-success,
+.page-contact-us .sk_btn {
+   color: #ffffff !important; /* Forces text to be white */
+   font-weight: 700 !important;
+   text-shadow: none !important; /* Removes any weird shadows that make it look blurry */
+}
+
+
+/* Also ensure it stays white when you hover over it */
+.page-contact-us .btn-success:hover,
+.page-contact-us .sk_btn:hover {
+   color: #ffffff !important;
+}
+
+
+/* 1. CONTAINER & TITLES */
+.page-change-password .container {
+   max-width: 950px !important;
+   background: white !important;
+   padding: 40px !important;
+   border-radius: 20px !important;
+}
+
+
+.page-change-password .sk_heading {
+   color: #1e293b !important;
+   font-weight: 800 !important;
+   border-bottom: 2px solid #f1f5f9 !important;
+   padding-bottom: 15px !important;
+   margin-bottom: 30px !important;
+}
+
+
+/* 2. PASSWORD RULES (Left Side) - Clean "Warning" Style */
+.page-change-password .border-primary {
+   border: none !important;
+   background-color: #fef2f2 !important; /* Soft red alert background */
+   border-radius: 12px !important;
+   padding: 20px !important;
+}
+
+
+.page-change-password .border-primary p {
+   color: #991b1b !important; /* Deep red text */
+   font-weight: 700 !important;
+}
+
+
+.page-change-password .text-muted ul {
+   background: #f8fafc !important;
+   border-radius: 12px !important;
+   padding: 20px 20px 20px 35px !important;
+   border: 1px solid #e2e8f0 !important;
+}
+
+
+.page-change-password .text-muted li {
+   margin-bottom: 5px !important;
+   font-size: 0.85rem !important;
+   color: #475569 !important;
+}
+
+
+/* 3. FORM INPUTS */
+.page-change-password .form-control {
+   background: #fcfcfc !important;
+   border: 1px solid #e2e8f0 !important;
+   border-radius: 8px !important;
+   padding: 10px 15px !important;
+   transition: all 0.2s ease !important;
+}
+
+
+.page-change-password .form-control:focus {
+   border-color: #1a4d24 !important; /* Westlake Green focus */
+   background: #ffffff !important;
+   box-shadow: 0 0 0 3px rgba(26, 77, 36, 0.1) !important;
+}
+
+
+.page-change-password label {
+   font-weight: 600 !important;
+   color: #334155 !important;
+}
+
+
+/* 4. UPDATE BUTTON - The "Success" Look */
+.page-change-password .sk_btn {
+   background-color: #1a4d24 !important; /* Westlake Green */
+   color: white !important;
+   border: none !important;
+   border-radius: 10px !important;
+   padding: 12px 25px !important;
+   font-weight: 700 !important;
+   font-size: 1rem !important;
+   margin-top: 15px !important;
+   box-shadow: 0 4px 12px rgba(26, 77, 36, 0.2) !important;
+   transition: all 0.2s ease !important;
+}
+
+
+.page-change-password .sk_btn:hover {
+   background-color: #297536 !important;
+   transform: translateY(-2px) !important;
+   box-shadow: 0 6px 15px rgba(26, 77, 36, 0.3) !important;
+}
+
+
+/* 5. HIDE LINGERING GREENINGS & DEFAULTS */
+.page-change-password .text-danger {
+   color: #ef4444 !important; /* Bright red for asterisks */
+}
+
+
+/* 1. CONTAINER & MAIN HEADINGS */
+.page-data-sharing .container {
+   max-width: 1000px !important;
+   background: #ffffff !important;
+   padding: 30px !important;
+   border-radius: 20px !important;
+}
+
+
+.page-data-sharing .sk_heading {
+   color: #1a4d24 !important;
+   font-weight: 800 !important;
+   letter-spacing: -0.5px !important;
+}
+
+
+/* 2. THE TOP SUMMARY TABLE */
+.page-data-sharing .sk_table {
+   border: 1px solid #f1f5f9 !important;
+   border-radius: 12px !important;
+   overflow: hidden !important;
+   margin-bottom: 30px !important;
+}
+
+
+.page-data-sharing .sk_thead th {
+   background: #f8fafc !important;
+   color: #64748b !important;
+   font-size: 0.8rem !important;
+   text-transform: uppercase !important;
+   padding: 15px !important;
+   border-bottom: 2px solid #e2e8f0 !important;
+}
+
+
+/* 3. SERVICE BLOCKS (Wonde, Kindo, etc.) */
+.data-sharing-block {
+   background: #ffffff !important;
+   border: 1px solid #e2e8f0 !important;
+   border-radius: 16px !important;
+   padding: 20px !important;
+   margin-bottom: 25px !important;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+   transition: transform 0.2s ease !important;
+}
+
+
+.data-sharing-block:hover {
+   transform: translateY(-3px) !important;
+   border-color: #cbd5e1 !important;
+}
+
+
+.page-innertitle {
+   font-size: 1.25rem !important;
+   font-weight: 700 !important;
+   color: #1e293b !important;
+   margin-bottom: 10px !important;
+}
+
+
+/* 4. THE "MORE INFO" CARDS (The long privacy text) */
+.data-sharing-block .card {
+   background: #f1f5f9 !important; /* Soft grey background for long text */
+   border: none !important;
+   border-radius: 12px !important;
+   font-size: 0.9rem !important;
+   line-height: 1.6 !important;
+   color: #475569 !important;
+   margin-top: 15px !important;
+}
+
+
+/* 5. CHECKBOX INDICATORS */
+/* Making the "checked" status look like a clean green pill */
+.data-sharing-checked::before {
+   content: "ACTIVE" !important;
+   background: #dcfce7 !important;
+   color: #166534 !important;
+   font-size: 0.7rem !important;
+   font-weight: 800 !important;
+   padding: 4px 10px !important;
+   border-radius: 20px !important;
+}
+
+
+/* 6. BUTTONS (More... buttons) */
+.page-data-sharing .sk_btn {
+   background: #e2e8f0 !important;
+   color: #475569 !important;
+   border-radius: 8px !important;
+   font-weight: 600 !important;
+   font-size: 0.85rem !important;
+   padding: 6px 15px !important;
+   border: none !important;
+}
+
+
+.page-data-sharing .sk_btn:hover {
+   background: #1a4d24 !important;
+   color: #ffffff !important;
+}
+
+
+/* 7. HIDE EMPTY TABLE ROWS & CLEANUP */
+.table-data-sharing-details {
+   margin-top: 10px !important;
+}
+
+
+.text-muted small {
+   color: #94a3b8 !important;
+   font-style: italic !important;
+}
+
+
+/* 1. KILLS ALL GREEN BACKGROUNDS (Universal Table Fix) */
+.page-medical .sk_thead,
+.page-medical .sk_thead th,
+.page-medical tr.sk_thead,
+.page-emergency-contacts .sk_thead,
+.page-emergency-contacts .sk_thead th,
+.page-emergency-contacts tr.sk_thead,
+.page-data-sharing .sk_thead,
+.page-data-sharing .sk_thead th,
+.page-data-sharing tr.sk_thead,
+.table-data-sharing .sk_thead th,
+.table-data-sharing-details tr {
+   background: #ffffff !important;
+   background-color: #ffffff !important;
+   color: #475569 !important; /* Professional Slate Grey Text */
+   border-bottom: 2px solid #f1f5f9 !important;
+}
+
+
+/* 2. FIX TABLE CELLS (Removes green from the data rows) */
+.sk_table td,
+.sk_table th,
+.ds-details-row,
+.ds-non-details-row {
+   background: transparent !important;
+   background-color: transparent !important;
+}
+
+
+/* 3. FIX TEXT COLORS (Ensures no white-on-white text) */
+.page-data-sharing th,
+.page-data-sharing td,
+.page-medical th,
+.page-medical td {
+   color: #1e293b !important;
+}
+
+
+/* 4. CLEAN UP SUBTITLES (The "Data Sharing Services" bar) */
+.page-subtitle.sk_heading {
+   background: transparent !important;
+   color: #1a4d24 !important;
+   border-bottom: 2px solid #1a4d24 !important;
+   padding-bottom: 10px !important;
+}
+
+
+/* 5. REMOVE THE "ACTIVE" GREEN PILL IF PREFERRED */
+/* If you just want the text "Send All" without a green block, use this: */
+.data-sharing-checked {
+   background: transparent !important;
+   color: #16a34a !important;
+   font-weight: bold !important;
+}
+
+
+/* Apply the same "Lift & Glow" animation as other pages */
+.page-data-sharing .sk_btn {
+   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+   display: inline-block !important;
+   text-decoration: none !important;
+   border-radius: 12px !important;
+}
+
+
+/* THE LIFT EFFECT: When you hover the More... button */
+.page-data-sharing .sk_btn:hover {
+   background-color: #297536 !important; /* Westlake Green */
+   color: #ffffff !important;           /* White text */
+   transform: translateY(-3px) !important; /* Moves it up slightly */
+   box-shadow: 0 6px 15px rgba(41, 117, 54, 0.3) !important;
+}
+
+
+/* ACTIVE STATE: When you click it */
+.page-data-sharing .sk_btn:active {
+   transform: translateY(-1px) !important;
+   box-shadow: 0 3px 8px rgba(41, 117, 54, 0.2) !important;
+}
+
+
+/* Ensure the text stays white when the section is expanded */
+.page-data-sharing .sk_btn[aria-expanded="true"] {
+   background-color: #1a4d24 !important;
+   color: white !important;
+}
+
+
+/* 1. THE DROPDOWN CONTAINER */
+#user-menu.nav-menu.sk_nav {
+   background: #ffffff !important;
+   border: 1px solid #e2e8f0 !important;
+   border-radius: 16px !important;
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+   padding: 10px !important;
+   min-width: 220px !important;
+   margin-top: 10px !important;
+}
+
+.dropdown-header.sk_nav_text {
+   padding: 15px !important;
+   background: #f8fafc !important; /* Light highlight for the ID section */
+   border-radius: 12px !important;
+   margin-bottom: 8px !important;
+}
+
+
+.dropdown-header strong {
+   color: #1a4d24 !important; /* Westlake Green for your name */
+   font-size: 1.1rem !important;
+   font-weight: 800 !important;
+}
+
+
+.dropdown-header small {
+   color: #64748b !important;
+   font-weight: 600 !important;
+   margin-top: 2px !important;
+}
+
+
+/* 3. MENU LINKS (Password, Data Sharing, etc.) */
+#user-menu .nav-link {
+   padding: 12px 15px !important;
+   margin: 2px 0 !important;
+   border-radius: 10px !important;
+   font-weight: 600 !important;
+   color: #475569 !important;
+   transition: all 0.2s ease !important;
+}
+
+
+/* Hover effect for links */
+#user-menu .nav-link:hover {
+   background-color: #f1f5f9 !important;
+   color: #1a4d24 !important;
+   padding-left: 20px !important; /* Subtle "slide" effect */
+}
+
+
+/* 4. LOGOUT LINK - Make it stand out */
+#user-menu a[href*="logout"] {
+   color: #ef4444 !important; /* Red for logout */
+}
+
+
+#user-menu a[href*="logout"]:hover {
+   background-color: #fef2f2 !important;
+   color: #dc2626 !important;
+}
+
+
+/* 5. DIVIDERS */
+.dropdown-divider {
+   border-top: 1px solid #f1f5f9 !important;
+   margin: 8px 10px !important;
+}
+
+
+/* 1. RESET NAV CONTAINER FOR STABILITY */
+.navbar-expand-lg .nav-item {
+   margin: 0 5px !important;
+   perspective: 1000px !important; /* Helps with 3D feel of the pop */
+}
+
+
+/* 2. UNIVERSAL NAV LINK ANIMATION (The "Pop") */
+.nav-main .nav-link {
+   display: inline-block !important;
+   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; /* Bouncy Pop effect */
+   border-radius: 8px !important;
+   padding: 8px 15px !important;
+   color: #475569 !important; /* Professional Slate */
+   font-weight: 600 !important;
+}
+
+
+/* 3. HOVER STATE - The Lift & Color Shift */
+.nav-main .nav-link:hover {
+   transform: translateY(-3px) scale(1.05) !important; /* Lifts and grows slightly */
+   color: #1a4d24 !important; /* Westlake Green */
+   background-color: rgba(26, 77, 36, 0.05) !important; /* Very faint green tint */
+   text-decoration: none !important;
+}
+
+
+/* 4. ACTIVE/OPEN STATE - Keep it steady when clicked */
+.nav-main .nav-link[aria-expanded="true"] {
+   transform: translateY(-1px) !important;
+   background-color: rgba(26, 77, 36, 0.1) !important;
+   color: #1a4d24 !important;
+}
+
+
+/* 5. AVATAR POP - Special animation for your profile picture */
+.avatar-container {
+   display: inline-block !important;
+   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+
+.avatar-container:hover {
+   transform: scale(1.15) rotate(3deg) !important; /* Pops and tilts slightly */
+}
+
+
+.avatar {
+   border: 2px solid transparent !important;
+   transition: border-color 0.3s ease !important;
+}
+
+
+.avatar-container:hover .avatar {
+   border-color: #1a4d24 !important;
+}
+
+
+/* 6. CLEAN UP MOBILE TOGGLE (The "Menu" button) */
+.navbar-toggler {
+   transition: all 0.2s ease !important;
+   border: none !important;
+}
+
+
+.navbar-toggler:hover {
+   transform: scale(1.05) !important;
+   background: #f8fafc !important;
+}
+
+
+/* 1. THE MODAL BACKDROP */
+#profile-image.modal {
+   background: rgba(15, 23, 42, 0.8) !important; /* Darker, blurrier backdrop */
+   backdrop-filter: blur(8px) !important;
+}
+
+
+/* 2. THE CARD BODY */
+.school-card {
+   border: none !important;
+   border-radius: 24px !important;
+   overflow: hidden !important;
+   background: #ffffff !important;
+   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+   border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+
+/* 3. THE HEADER (Westlake Green Bar) */
+.school-card-header {
+   background: #1a4d24 !important; /* Westlake Green */
+   padding: 25px !important;
+   display: flex !important;
+   align-items: center !important;
+}
+
+
+.school-card-crest img {
+   filter: brightness(0) invert(1) !important; /* Makes the logo white */
+   max-height: 60px !important;
+   margin-right: 20px !important;
+}
+
+
+.school-card-title {
+   color: #ffffff !important;
+   font-weight: 800 !important;
+   font-size: 1.4rem !important;
+   margin: 0 !important;
+}
+
+
+.school-card-headerinfo .school-card-label {
+   color: rgba(255, 255, 255, 0.8) !important;
+}
+
+
+.school-card-headerinfo span {
+   color: #ffffff !important;
+}
+
+
+/* 4. THE MAIN CONTENT AREA */
+.school-card-main {
+   padding: 30px !important;
+   display: grid !important;
+   grid-template-columns: 1fr 1.5fr !important; /* Image on left, Info on right */
+   gap: 30px !important;
+}
+
+
+/* Photo Styling */
+.school-card-image img {
+   border-radius: 16px !important;
+   border: 4px solid #f1f5f9 !important;
+   box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+   max-width: 100% !important;
+}
+
+
+/* Info Text Styling */
+.school-card-info {
+   display: flex !important;
+   flex-direction: column !important;
+   justify-content: center !important;
+}
+
+
+.school-card-row {
+   margin-bottom: 10px !important;
+   font-size: 1rem !important;
+}
+
+
+.school-card-label {
+   font-weight: 700 !important;
+   color: #64748b !important;
+   width: 130px !important;
+   display: inline-block !important;
+   text-transform: uppercase !important;
+   font-size: 0.75rem !important;
+}
+
+
+.school-card-info span:not(.school-card-label) {
+   color: #1e293b !important;
+   font-weight: 600 !important;
+}
+
+
+/* 5. DOB / AGE / YEAR - The "Pill" Row */
+.school-card-dob {
+   background: #f8fafc !important;
+   padding: 15px !important;
+   border-radius: 12px !important;
+   margin: 15px 0 !important;
+   display: flex !important;
+   justify-content: space-between !important;
+}
+
+
+.school-card-dob .school-card-row {
+   margin: 0 !important;
+}
+
+
+/* 6. THE BARCODE SECTION */
+.school-card-barcode {
+   padding: 20px !important;
+   background: #ffffff !important;
+   border-top: 2px dashed #e2e8f0 !important; /* "Coupon" style tear line */
+   text-align: center !important;
+}
+
+
+.barcode {
+   max-width: 100% !important;
+   height: auto !important;
+}
+
+
+/* 7. CLOSE BUTTON */
+.school-card-close {
+   position: absolute !important;
+   top: 15px !important;
+   right: 20px !important;
+   color: white !important;
+   opacity: 0.8 !important;
+   font-size: 2rem !important;
+}
+
+
+.school-card-close:hover {
+   opacity: 1 !important;
+}
+
+
+/* 1. FROSTED GLASS OVERLAY (Blur without the dark tint) */
+#profile-image.modal {
+   background: rgba(255, 255, 255, 0.3) !important; /* Semi-transparent white instead of dark */
+   backdrop-filter: blur(15px) saturate(180%) !important; /* Heavy blur + color boost */
+   -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+}
+
+
+/* 2. THE CARD SHADOW (Deeper shadow to stand out against blur) */
+.school-card {
+   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15),
+               0 0 0 1px rgba(255, 255, 255, 0.5) !important; /* Subtle white border glow */
+}
+
+
+/* 3. ENSURE THE CONTENT BEHIND IS STILL VISIBLE BUT BLURRED */
+.modal-backdrop {
+   background-color: transparent !important; /* Removes the default black tint entirely */
+}
+
+
+/* 4. MODAL ANIMATION (Smooth Fade-in for the Blur) */
+#profile-image.fade {
+   transition: opacity 0.3s linear, backdrop-filter 0.3s ease !important;
+}
+
+
+/* 1. THE ENTRANCE (Spring Pop) */
+#profile-image.modal.show .modal-dialog {
+   animation: elasticPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+
+@keyframes elasticPop {
+   0% {
+       opacity: 0;
+       transform: scale(0.8) translateY(40px);
+   }
+   100% {
+       opacity: 1;
+       transform: scale(1) translateY(0);
+   }
+}
+
+
+/* 2. THE EXIT (Soft Shrink) */
+/* Note: This applies when the 'show' class is removed by the site's script */
+#profile-image.modal:not(.show) .modal-dialog {
+   transition: all 0.25s cubic-bezier(0.4, 0, 1, 1) !important;
+   transform: scale(0.9) opacity(0) !important;
+}
+
+
+/* 3. THE BACKDROP BLUR ANIMATION */
+/* This makes the frosted glass blur "melt" in and out instead of snapping */
+#profile-image.modal.fade {
+   transition: backdrop-filter 0.4s ease, background-color 0.4s ease !important;
+}
+
+
+#profile-image.modal.show {
+   backdrop-filter: blur(15px) saturate(180%) !important;
+   -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+}
+
+
+/* 4. RE-STYLING THE CLOSE BUTTON TO MATCH */
+.school-card-close {
+   transition: all 0.2s ease !important;
+   outline: none !important;
+}
+
+
+.school-card-close:hover {
+   transform: rotate(90deg) scale(1) !important;
+   color: #ff4d4d !important; /* Slight red tint on hover to signal 'close' */
+}
+
+
+/* 1. CLEANING THE BACKGROUND & SPACING */
+.page-enrolment .container {
+   max-width: 800px !important;
+   background: #ffffff !important;
+   padding: 40px !important;
+   border-radius: 24px !important;
+   box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+}
+
+
+/* 2. THE INSTRUCTION BOX (The "Before you Start" section) */
+.page-enrolment-signin p {
+   background: #f8fafc !important;
+   padding: 15px 20px !important;
+   border-left: 4px solid #1a4d24 !important; /* Westlake Green accent */
+   border-radius: 8px !important;
+   color: #475569 !important;
+   font-size: 0.95rem !important;
+   line-height: 1.6 !important;
+   margin-bottom: 12px !important;
+}
+
+
+/* Highlight the "Supporting Documents" link */
+.page-enrolment a {
+   color: #1a4d24 !important;
+   font-weight: 700 !important;
+   text-decoration: underline !important;
+}
+
+
+/* 3. FORM LABELS & HELPER TEXT */
+.page-enrolment .form-label {
+   font-weight: 700 !important;
+   color: #1e293b !important;
+   margin-bottom: 4px !important;
+}
+
+
+.page-enrolment .text-muted {
+   font-size: 0.85rem !important;
+   color: #64748b !important;
+   margin-bottom: 10px !important;
+   display: block !important;
+}
+
+
+/* 4. MODERN INPUT FIELDS */
+.page-enrolment .form-control {
+   height: 50px !important;
+   border-radius: 12px !important;
+   border: 1px solid #e2e8f0 !important;
+   background-color: #fcfcfc !important;
+   padding: 10px 18px !important;
+   transition: all 0.2s ease !important;
+}
+
+
+.page-enrolment .form-control:focus {
+   border-color: #1a4d24 !important;
+   background-color: #ffffff !important;
+   box-shadow: 0 0 0 4px rgba(26, 77, 36, 0.1) !important;
+}
+
+
+/* 5. THE START BUTTON (Matches your global "Pop" style) */
+.page-enrolment .sk_btn {
+   background-color: #1a4d24 !important;
+   color: white !important;
+   width: 100% !important; /* Makes it a primary call-to-action */
+   padding: 16px !important;
+   font-size: 1.1rem !important;
+   font-weight: 700 !important;
+   border-radius: 14px !important;
+   border: none !important;
+   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+
+.page-enrolment .sk_btn:hover {
+   transform: translateY(-3px) !important;
+   box-shadow: 0 10px 20px rgba(26, 77, 36, 0.2) !important;
+   background-color: #23632f !important;
+}
+
+
+/* 6. CLOUDFLARE TURNSTILE (Center the Captcha) */
+.cf-turnstile {
+   display: flex !important;
+   justify-content: center !important;
+   margin: 20px 0 !important;
+}
+
+
+/* Change the Enrolment Heading to Dark Grey */
+.page-enrolment .sk_heading {
+   color: #334155 !important; /* Professional Slate/Dark Grey */
+   font-weight: 800 !important;
+   letter-spacing: -1px !important;
+   margin-bottom: 25px !important;
+   border-bottom: none !important; /* Keeps it clean without the underline */
+}
+
+
+/* Ensure any other "Enrolment" text (like subtitles) follows suit */
+.page-enrolment-signin .page-title h1 {
+   color: #334155 !important;
+}
+
+
+/* 1. MODAL STRUCTURE & FROSTED GLASS */
+.modal-content {
+   border: none !important;
+   border-radius: 24px !important;
+   overflow: hidden !important;
+   background: rgba(255, 255, 255, 0.9) !important;
+   backdrop-filter: blur(10px) !important;
+   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+/* 2. HEADER - Clean & Professional */
+.modal-header.bg-light {
+   background: #ffffff !important;
+   padding: 25px 30px !important;
+   border-bottom: 1px solid #f1f5f9 !important;
+}
+
+
+.modal-title {
+   color: #1e293b !important; /* Dark Grey */
+   font-weight: 800 !important;
+   font-size: 1.25rem !important;
+}
+
+
+/* 3. INPUT FIELDS - High Contrast */
+.auth-label {
+   font-weight: 700 !important;
+   color: #64748b !important;
+   text-transform: uppercase !important;
+   font-size: 0.75rem !important;
+   letter-spacing: 0.5px !important;
+   margin-bottom: 8px !important;
+}
+
+
+.modal-body .form-control {
+   background: #f8fafc !important;
+   border: 2px solid #e2e8f0 !important;
+   border-radius: 12px !important;
+   padding: 12px 16px !important;
+   height: auto !important;
+   transition: all 0.2s ease !important;
+}
+
+
+.modal-body .form-control:focus {
+   border-color: #1a4d24 !important;
+   background: #ffffff !important;
+   box-shadow: 0 0 0 4px rgba(26, 77, 36, 0.1) !important;
+}
+
+
+/* 4. THE LOGIN BUTTON */
+.modal-body .sk_btn {
+   background: #1a4d24 !important;
+   color: white !important;
+   border-radius: 12px !important;
+   padding: 14px !important;
+   font-weight: 700 !important;
+   font-size: 1rem !important;
+   border: none !important;
+   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+
+.modal-body .sk_btn:hover {
+   transform: translateY(-2px) !important;
+   box-shadow: 0 8px 20px rgba(26, 77, 36, 0.25) !important;
+}
+
+
+/* 5. SCHOOLBRIDGE SSO BUTTON - Clean Up */
+.sso-login-button {
+   border-radius: 12px !important;
+   transition: transform 0.2s ease !important;
+}
+
+
+.sso-login-button:hover {
+   transform: scale(1.02) !important;
+   text-decoration: none !important;
+}
+
+
+.sso-login-button span {
+   font-weight: 700 !important;
+   font-size: 0.9rem !important;
+}
+
+
+/* 6. HR DIVIDER */
+hr.my-3 {
+   border-top: 1px solid #e2e8f0 !important;
+   opacity: 1 !important;
+}
+
+
+/* Ensure the school heading doesn't overlap the clock on smaller screens */
+.sk_school_heading {
+   z-index: 1 !important;
+}
+
+
+#tm-header-clock {
+   transition: all 0.2s ease !important;
+}
+
+
+/* Subtle pulse for the separators */
+.clock-sep {
+   opacity: 0.8;
+   margin: 0 2px;
+}
+
+
+/* Hover effect */
+#tm-header-clock:hover {
+   background: #ffffff !important;
+   border-color: #1a4d24 !important;
+   color: #1a4d24 !important;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+}
+
+
+/* This targets the box the script tagged */
+.calendar-day.current-period {
+   border: 3px solid #1a4d24 !important;
+   position: relative !important;
+   z-index: 99 !important;
+   background-color: rgba(26, 77, 36, 0.05) !important;
+   box-sizing: border-box !important;
+}
+
+
+/* This makes sure the text inside looks clean */
+.current-period h6 {
+   color: #1a4d24 !important;
+   font-weight: 900 !important;
+}
+
+
+/* Force all calendar boxes to the same height */
+.calendar-day {
+   min-height: 10px !important; /* Adjust this number until they look perfect */
+   display: flex !important;
+   flex-direction: column !important;
+   justify-content: space-between !important;
+   padding: 12px !important;
+}
+
+
+/* Ensure the middle section (Subject Code) always takes up the same space */
+.calendar-day > div.d-flex.align-items-center {
+   flex-grow: 1 !important;
+   margin: 8px 0 !important;
+}
+
+
+/* Fix for the attendance icon row to prevent it from pushing boundaries */
+.attendance-icon {
+   width: 20px !important;
+   height: 30px !important;
+   line-height: 24px !important;
+   font-size: 10px !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+}
+
+/* 1. Target the specific link */
+.nav-link-contact_us {
+    font-size: 0 !important; /* Hides the original "Contact Us" text */
+    visibility: hidden;
+}
+
+/* 2. Add the new text back in */
+.nav-link-contact_us::after {
+    content: "Contact School"; /* Your new text */
+    font-size: 1rem !important; /* Set this to match your site's font size */
+    visibility: visible;
+    display: inline-block;
+}
