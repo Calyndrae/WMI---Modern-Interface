@@ -1,0 +1,153 @@
+// ==UserScript==
+// @name         WMI - Guides
+// @namespace    http://tampermonkey.net/
+// @version      2.1
+// @description  Targets the specific Live Hub widget and adds a progress bar to the tutorial.
+// @author       Gemini, Calyndrae
+// @match        https://westlake.school.kiwi/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    if (localStorage.getItem('westlake_system_tutorial') === '1') return;
+
+    let currentStep = parseInt(localStorage.getItem('tut_progress') || '0');
+
+    const steps = [
+        { title: "Guiding", text: "Welcome to the WMI - Westlake Modern Interface. Let's start the walkthrough.", selector: null, action: "next" },
+        { title: "Profile Management", text: "Access your account settings and security here.", selector: ".nav-link--account", action: "next" },
+        { title: "Knowledge Base", text: "This menu contains all school information folders.", selector: "a[data-toggle='collapse'][href*='menu-folder']", action: "next" },
+        { title: "Attendance Tracker", text: "Click here to view your live attendance record.", selector: ".nav-link-attendance", action: "redirect" },
+        // Targeting the specific widget
+        { title: "Live Hub", text: "This widget tracks your current period and day progress in real-time. It tells you when school is closed.", selector: "div[style*='position: fixed'][style*='bottom: 30px'][style*='left: 30px']", action: "next" },
+        { title: "Final Check", text: "Green 'P' means Present. Check this daily to ensure your records are accurate.", selector: ".is-today", action: "finish" }
+    ];
+
+    if (document.getElementById('tut-mask')) return;
+
+    // --- UI INJECTION ---
+    const overlay = document.createElement('div');
+    overlay.id = 'tut-mask';
+    Object.assign(overlay.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        zIndex: '2147483640', pointerEvents: 'none', display: 'none'
+    });
+
+    overlay.innerHTML = `
+        <svg width="100%" height="100%" style="position:absolute; pointer-events:none;">
+            <defs>
+                <mask id="hole">
+                    <rect width="100%" height="100%" fill="white"/>
+                    <rect id="mask-hole" x="50%" y="50%" width="0" height="0" rx="15" fill="black"
+                        style="transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);" />
+                </mask>
+            </defs>
+            <rect width="100%" height="100%" fill="rgba(0,0,0,0.8)" mask="url(#hole)" style="pointer-events:all;"/>
+        </svg>`;
+    document.body.appendChild(overlay);
+
+    const card = document.createElement('div');
+    card.id = 'tut-card';
+    Object.assign(card.style, {
+        position: 'fixed', bottom: '40px', right: '40px', width: '300px',
+        backgroundColor: 'white', padding: '24px', borderRadius: '24px',
+        boxShadow: '0 25px 70px rgba(0,0,0,0.5)', zIndex: '2147483647',
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        transform: 'translateY(20px)', opacity: '0'
+    });
+    document.body.appendChild(card);
+
+    function updateGuide() {
+        const step = steps[currentStep];
+        if (!step) return;
+
+        const progressPercent = ((currentStep + 1) / steps.length) * 100;
+
+        card.innerHTML = `
+            <div style="margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <div style="width:8px; height:8px; background:#1a4d24; border-radius:50%;"></div>
+                    <h3 style="margin:0; color:#1a4d24; font-size:16px; font-weight:800;">${step.title}</h3>
+                </div>
+                <span style="font-size:11px; color:#94a3b8; font-weight:700;">${currentStep + 1} / ${steps.length}</span>
+            </div>
+            <p style="margin:0; color:#475569; font-size:14px; line-height:1.5; min-height:45px;">${step.text}</p>
+
+            <div style="width:100%; height:4px; background:#f1f5f9; border-radius:10px; margin-top:20px; overflow:hidden;">
+                <div id="tut-progress-fill" style="width:${progressPercent}%; height:100%; background:#1a4d24; transition: width 0.6s ease;"></div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button id="guide-skip" style="flex:1; padding:10px; background:#fff; color:#94a3b8; border:1px solid #e2e8f0; border-radius:12px; font-weight:600; cursor:pointer; font-size:13px;">Skip</button>
+                <button id="guide-next" style="flex:2; padding:10px; background:#1a4d24; color:white; border:none; border-radius:12px; font-weight:700; cursor:pointer; font-size:13px;">
+                    ${step.action === 'redirect' ? 'Open Page' : (step.action === 'finish' ? 'Finish' : 'Next Step')}
+                </button>
+            </div>
+        `;
+
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+
+        const hole = document.getElementById('mask-hole');
+
+        // Custom Selector logic for the Hub Widget
+        let target = null;
+        if (step.selector) {
+            // If it's the Hub, find it by its unique fixed positioning
+            if (step.title === "Live Hub") {
+                target = Array.from(document.querySelectorAll('div')).find(el =>
+                    el.style.position === 'fixed' && el.style.left === '30px'
+                );
+            } else {
+                target = document.querySelector(step.selector);
+            }
+        }
+
+        if (target) {
+            overlay.style.display = "block";
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            setTimeout(() => {
+                const rect = target.getBoundingClientRect();
+                hole.setAttribute('x', rect.left - 12);
+                hole.setAttribute('y', rect.top - 12);
+                hole.setAttribute('width', rect.width + 24);
+                hole.setAttribute('height', rect.height + 24);
+            }, 300);
+        } else {
+            hole.setAttribute('width', '0');
+            hole.setAttribute('height', '0');
+            setTimeout(() => { overlay.style.display = "none"; }, 600);
+        }
+
+        document.getElementById('guide-next').onclick = () => {
+            if (step.action === 'redirect' && target) {
+                localStorage.setItem('tut_progress', (currentStep + 1).toString());
+                target.click();
+            } else if (step.action === 'finish') {
+                completeTutorial();
+            } else {
+                currentStep++;
+                localStorage.setItem('tut_progress', currentStep.toString());
+                updateGuide();
+            }
+        };
+
+        document.getElementById('guide-skip').onclick = completeTutorial;
+    }
+
+    function completeTutorial() {
+        card.style.transform = 'translateY(40px)';
+        card.style.opacity = '0';
+        localStorage.setItem('westlake_system_tutorial', '1');
+        localStorage.removeItem('tut_progress');
+        setTimeout(() => {
+            overlay.remove(); card.remove();
+        }, 500);
+    }
+
+    window.onload = () => setTimeout(updateGuide, 1000);
+})();
