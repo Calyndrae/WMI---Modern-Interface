@@ -6,6 +6,8 @@
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Web%20Edit%20Belonging%20Info.user.js
+// @downloadURL  https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Web%20Edit%20Belonging%20Info.user.js
 // ==/UserScript==
 
 (function() {
