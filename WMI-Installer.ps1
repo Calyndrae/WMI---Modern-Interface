@@ -3,6 +3,9 @@
 # Windows 11 Only
 # ==============================
 
+# 强制切换到脚本所在目录（核心修复点）
+Set-Location -Path $PSScriptRoot
+
 Clear-Host
 $Host.UI.RawUI.WindowTitle = "WMI Installer"
 
@@ -15,8 +18,11 @@ function Open-Web-And-Wait {
     Write-Host ""
     Write-Host "----------------------------------------"
     Write-Host $Message
-    Write-Host "浏览器即将打开，请完成下载"
-    Write-Host "完成后回到此窗口，按任意键继续"
+    Write-Host ""
+    Write-Host "1. 浏览器将自动打开"
+    Write-Host "2. 请完成下载 / 安装"
+    Write-Host "3. 完成后回到此窗口"
+    Write-Host "4. 按任意键继续"
     Write-Host "----------------------------------------"
     Write-Host ""
 
@@ -27,17 +33,15 @@ function Open-Web-And-Wait {
 # ===== Step 1 =====
 Open-Web-And-Wait `
     "https://github.com/Calyndrae/WMI---Modern-Interface/releases/latest" `
-    "步骤 1：下载 WMI 主程序"
-
-# ===== Step 2（如果你以后有第二个）=====
-# Open-Web-And-Wait `
-#     "https://example.com/second-download" `
-#     "步骤 2：下载额外组件"
+    "步骤 1：下载 WMI Modern Interface（Release 1.0）"
 
 # ===== Finish =====
 Write-Host ""
 Write-Host "========================================"
-Write-Host "所有步骤已完成"
-Write-Host "你现在可以关闭此窗口"
+Write-Host "WMI 安装流程已完成"
+Write-Host ""
+Write-Host "如果界面未生效："
+Write-Host "- 请刷新网站"
+Write-Host "- 或重新打开浏览器"
 Write-Host "========================================"
 Pause
