@@ -49,6 +49,10 @@ Once installed, Tampermonkey will automatically check this repository for update
 
 ---
 
+##  Newest Updates
+Currently none
+---
+
 ## 🤝 Credits
 * **Lead Developer:** Calyndrae
 * **AI Collaborator:** Google Gemini (Flash 2.0)
