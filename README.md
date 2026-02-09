@@ -1,4 +1,4 @@
-# 🚀 WMI — Westlake Modern Interface
+# WMI — Westlake Modern Interface
 
 A premium, modern visual overhaul for the Westlake student portal, developed by **Calyndrae** and **Google Gemini**. 
 
