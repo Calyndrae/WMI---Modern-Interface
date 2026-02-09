@@ -7,6 +7,8 @@
 // @match        *://westlake.school.kiwi/*
 // @run-at       document-start
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Profile%20Customizer.user.js
+// @downloadURL  https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Profile%20Customizer.user.js
 // ==/UserScript==
 
 (function() {
