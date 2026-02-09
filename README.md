@@ -50,7 +50,8 @@ Once installed, Tampermonkey will automatically check this repository for update
 ---
 
 ##  Newest Updates
-Currently none
+* **Fixed Profile:** Fixed Profile picture not showing.
+
 ---
 
 ## 🤝 Credits
