@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         WMI - Current Subject Block
 // @namespace    http://tampermonkey.net/
-// @version      6.0
-// @description  HUD constantly follows cursor within a fixed tethered range. Smooth organic floating.
+// @version      6.1
+// @description  A floating hub that shows the current status.
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
