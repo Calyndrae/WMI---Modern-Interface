@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name         WMI - Profile Customizer
-// @namespace    http://tampermonkey.net/
-// @version      4.5
-// @description  Fixed Reset button and optimized UI loops.
-// @author       Gemini, Calyndrae
-// @match        *://westlake.school.kiwi/*
-// @run-at       document-start
-// @grant        none
-// @updateURL    https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Profile%20Customizer.user.js
-// @downloadURL  https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Profile%20Customizer.user.js
+// @name          WMI - Profile Customizer
+// @namespace     http://tampermonkey.net/
+// @version       4.7
+// @description   Fixed Reset button and optimized UI loops with MutationObserver for instant sync.
+// @author        Gemini, Calyndrae
+// @match         *://westlake.school.kiwi/*
+// @run-at        document-start
+// @grant         none
+// @updateURL     https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Profile%20Customizer.user.js
+// @downloadURL   https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Profile%20Customizer.user.js
 // ==/UserScript==
 
 (function() {
@@ -110,6 +110,7 @@
 
     const buildUI = () => {
         if (document.getElementById('wmi-settings-modal')) return;
+        injectStyles();
 
         const modal = document.createElement('div');
         modal.id = 'wmi-settings-modal';
@@ -145,22 +146,18 @@
         `;
         document.body.appendChild(cropUI);
 
-        // --- BUTTON LOGIC ---
+        // Events
         document.getElementById('wmi-dismiss-btn').onclick = () => { modal.style.display = 'none'; };
-
         document.getElementById('wmi-reset-act').onclick = () => {
             localStorage.removeItem(STORAGE_KEY);
-            window.location.reload(); // Hard reload to clear the custom avatar
+            location.reload();
         };
-
         const fileInput = document.getElementById('wmi-hidden-input');
         document.getElementById('wmi-upload-act').onclick = () => fileInput.click();
         fileInput.onchange = (e) => { if(e.target.files[0]) startCropping(e.target.files[0]); };
-
         document.getElementById('wmi-zoom-in').onclick = () => { imgState.scale *= 1.1; draw(); };
         document.getElementById('wmi-zoom-out').onclick = () => { imgState.scale *= 0.9; draw(); };
         document.getElementById('wmi-cancel-crop').onclick = () => { cropUI.style.display = 'none'; fileInput.value = ''; };
-
         document.getElementById('wmi-save-crop').onclick = () => {
             const out = document.createElement('canvas');
             out.width = 500; out.height = 500;
@@ -176,7 +173,7 @@
     };
 
     const addMenuTrigger = () => {
-        const userMenu = document.getElementById('user-menu');
+        const userMenu = document.getElementById('user-menu') || document.querySelector('.dropdown-menu');
         if (userMenu && !document.getElementById('wmi-trigger-btn')) {
             const btn = document.createElement('a');
             btn.id = 'wmi-trigger-btn';
@@ -188,9 +185,12 @@
                 userMenu.insertBefore(btn, logout);
                 const d = document.createElement('div'); d.className = 'dropdown-divider';
                 userMenu.insertBefore(d, logout);
+            } else {
+                userMenu.appendChild(btn);
             }
             btn.onclick = (e) => {
                 e.preventDefault();
+                buildUI(); // Ensure UI exists
                 document.getElementById('wmi-settings-modal').style.display = 'flex';
             };
         }
@@ -199,16 +199,41 @@
     const sync = () => {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (!saved) return;
-        document.querySelectorAll('img.avatar, .school-card-image img, img[src*="/students/profile"]').forEach(img => {
-            if (img.src !== saved) img.src = saved;
+        // Expanded selectors to catch navbars, profile pages, and thumbnails
+        const selectors = [
+            'img.avatar',
+            '.school-card-image img',
+            'img[src*="/students/profile"]',
+            '.nav-user-avatar img',
+            '.user-profile-avatar img',
+            '#user-menu img',
+            '.profile-image'
+        ];
+        document.querySelectorAll(selectors.join(', ')).forEach(img => {
+            if (img.src !== saved) {
+                img.src = saved;
+                img.srcset = ""; // Clear srcset to prevent original high-res from loading
+            }
         });
     };
 
-    injectStyles();
-    // Build UI once, sync and check menu trigger often
-    buildUI();
-    setInterval(() => {
-        addMenuTrigger();
+    // Use MutationObserver for instant replacement
+    const observer = new MutationObserver(() => {
         sync();
-    }, 500);
+        addMenuTrigger();
+    });
+
+    // Start watching the page immediately
+    if (document.body) {
+        observer.observe(document.body, { childList: true, subtree: true });
+        sync();
+    } else {
+        document.addEventListener('DOMContentLoaded', () => {
+            observer.observe(document.body, { childList: true, subtree: true });
+            sync();
+        });
+    }
+
+    // Fallback interval for tricky elements
+    setInterval(sync, 1000);
 })();
