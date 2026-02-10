@@ -1,1 +1,38 @@
-test
+==========================================================
+          WMI - DEVELOPMENT TIMELINE
+==========================================================
+
+ ● [v4.0.0] -- 2026-02-11 (TODAY)
+ |  STABLE RELEASE
+ |  ----------------------------------------------------
+ |  + NEW: Independent "Update Logs" modal system.
+ |  + FIX: Bypassed CORS blocks via GM_xmlhttpRequest.
+ |  + UI: Switched to Vertical List alignment in menu.
+ |  + UI: Removed unnecessary dividers for compact look.
+ |
+ ● [v3.5.0] -- 2026-02-08
+ |  VISUAL OVERHAUL
+ |  ----------------------------------------------------
+ |  + Added "Other" window with developer credentials.
+ |  + Implemented high-fidelity backdrop blur (12px).
+ |  + Refined "Inter" sans-serif font integration.
+ |
+ ● [v3.0.0] -- 2026-02-01
+ |  CORE ENGINE UPGRADE
+ |  ----------------------------------------------------
+ |  + Integrated MutationObserver for dynamic menu loading.
+ |  + Added Custom Profile Picture (PFP) injection logic.
+ |  + Optimized style injection to reduce layout shift.
+ |
+ ● [v2.0.0] -- 2026-01-20
+ |  BETA PHASE
+ |  ----------------------------------------------------
+ |  + Initial concept for Westlake Modern Interface.
+ |  + Basic menu button injection testing.
+ |  + Setup GitHub repository for remote script updates.
+ |
+ ┕━━━━━━━━━━━━━━━[ END OF LOG ]━━━━━━━━━━━━━━━┙
+
+ Developed by Gemini & Calyndrae
+ Westlake Modern Interface © 2026
+==========================================================
