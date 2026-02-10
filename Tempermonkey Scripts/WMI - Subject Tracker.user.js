@@ -1,7 +1,7 @@
 //==UserScript==
 // @name         WMI - Subject Tracker
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.1
 // @description  Current: Grey, Next: Green. Preserves your original theme!
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
@@ -27,7 +27,7 @@ function updateTracker() {
             return;
         }
 
-        // ... rest of your code (periods, currentTime, logic, etc.)
+        // ... rest of the code (periods, currentTime, logic, etc.)
     }
 
 (function() {
