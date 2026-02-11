@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name          WMI - Profile Customizer
 // @namespace     http://tampermonkey.net/
-// @version       4.7
-// @description   Fixed Reset button and optimized UI loops with MutationObserver for instant sync.
+// @version       4.8
+// @description   Includes Scroll-Lock and Background-Interaction Blocking.
 // @author        Gemini, Calyndrae
 // @match         *://westlake.school.kiwi/*
 // @run-at        document-start
@@ -22,6 +22,16 @@
         style.id = 'wmi-v4-styles';
         style.textContent = `
             @keyframes wmiFadeIn { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+            /* Background Interaction Blocker */
+            .wmi-scroll-lock { overflow: hidden !important; height: 100vh !important; }
+
+            .wmi-modal-backdrop {
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+                z-index: 9999998; display: none;
+            }
+
             #wmi-settings-modal {
                 position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
                 background: white; padding: 40px; border-radius: 24px;
@@ -30,12 +40,14 @@
                 border: 1px solid #e2e8f0; font-family: 'Inter', sans-serif;
                 min-width: 480px; text-align: center; animation: wmiFadeIn 0.3s ease-out forwards;
             }
+
             #wmi-settings-modal img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid #297536; }
             .wmi-btn-group { display: flex; gap: 12px; width: 100%; justify-content: center; }
             .wmi-btn { padding: 10px 22px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; }
             .wmi-btn-primary { background: #297536; color: white; }
             .wmi-btn-secondary { background: #f1f5f9; color: #475569; }
             .wmi-btn-danger { background: #fee2e2; color: #dc2626; }
+
             #wmi-cropper-overlay {
                 position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
                 background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(8px);
@@ -47,6 +59,16 @@
             .wmi-instr { color: #64748b; margin-top: 15px; font-size: 13px; font-weight: 500; }
         `;
         document.documentElement.appendChild(style);
+    };
+
+    const toggleLock = (on) => {
+        if (on) {
+            document.body.classList.add('wmi-scroll-lock');
+            document.getElementById('wmi-modal-bg').style.display = 'block';
+        } else {
+            document.body.classList.remove('wmi-scroll-lock');
+            document.getElementById('wmi-modal-bg').style.display = 'none';
+        }
     };
 
     let sourceImg = new Image();
@@ -112,6 +134,12 @@
         if (document.getElementById('wmi-settings-modal')) return;
         injectStyles();
 
+        // Backdrop to prevent background interaction
+        const bg = document.createElement('div');
+        bg.id = 'wmi-modal-bg';
+        bg.className = 'wmi-modal-backdrop';
+        document.body.appendChild(bg);
+
         const modal = document.createElement('div');
         modal.id = 'wmi-settings-modal';
         const current = localStorage.getItem(STORAGE_KEY) || 'https://westlake.school.kiwi/students/profile';
@@ -147,7 +175,10 @@
         document.body.appendChild(cropUI);
 
         // Events
-        document.getElementById('wmi-dismiss-btn').onclick = () => { modal.style.display = 'none'; };
+        document.getElementById('wmi-dismiss-btn').onclick = () => {
+            modal.style.display = 'none';
+            toggleLock(false);
+        };
         document.getElementById('wmi-reset-act').onclick = () => {
             localStorage.removeItem(STORAGE_KEY);
             location.reload();
@@ -190,7 +221,8 @@
             }
             btn.onclick = (e) => {
                 e.preventDefault();
-                buildUI(); // Ensure UI exists
+                buildUI();
+                toggleLock(true);
                 document.getElementById('wmi-settings-modal').style.display = 'flex';
             };
         }
@@ -199,7 +231,6 @@
     const sync = () => {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (!saved) return;
-        // Expanded selectors to catch navbars, profile pages, and thumbnails
         const selectors = [
             'img.avatar',
             '.school-card-image img',
@@ -212,18 +243,16 @@
         document.querySelectorAll(selectors.join(', ')).forEach(img => {
             if (img.src !== saved) {
                 img.src = saved;
-                img.srcset = ""; // Clear srcset to prevent original high-res from loading
+                img.srcset = "";
             }
         });
     };
 
-    // Use MutationObserver for instant replacement
     const observer = new MutationObserver(() => {
         sync();
         addMenuTrigger();
     });
 
-    // Start watching the page immediately
     if (document.body) {
         observer.observe(document.body, { childList: true, subtree: true });
         sync();
@@ -234,6 +263,5 @@
         });
     }
 
-    // Fallback interval for tricky elements
     setInterval(sync, 1000);
 })();
