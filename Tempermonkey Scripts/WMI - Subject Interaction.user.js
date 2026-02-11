@@ -1,18 +1,18 @@
 // ==UserScript==
-// @name         WMI - Subject Interaction
-// @namespace    http://tampermonkey.net/
-// @version      2.0
-// @author       Gemini, Calyndrae
-// @match        https://westlake.school.kiwi/*
-// @grant        none
-// @updateURL    https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Subject%20Interaction.user.js
-// @downloadURL  https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Subject%20Interaction.user.js
+// @name          WMI - Subject Interaction
+// @namespace     http://tampermonkey.net/
+// @version       2.2
+// @description   Fixed visibility check for host prompts and tooltips.
+// @author        Gemini, Calyndrae
+// @match         https://westlake.school.kiwi/*
+// @grant         none
+// @updateURL     https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Subject%20Interaction.user.js
+// @downloadURL   https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Subject%20Interaction.user.js
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    // 1. Descriptions Database
     const subjectData = {
         "MAT": "Focus on Quadratic Equations, numbers",
         "SCI": "Physics & Chemistry",
@@ -30,7 +30,6 @@
         "MUS": "Music"
     };
 
-    // 2. Click Links Database (Add URLs here)
     const subjectLinks = {
         "MAT": "https://westlake.bridge.school.nz/course_selection/learning_areas/1912",
         "ENG": "https://westlake.bridge.school.nz/course_selection/learning_areas/1905",
@@ -42,16 +41,30 @@
         "SPN": "https://westlake.bridge.school.nz/course_selection/learning_areas/1910",
         "ART": "https://westlake.bridge.school.nz/course_selection/learning_areas/1897",
         "FSC": "https://westlake.bridge.school.nz/course_selection/learning_areas/1908",
-        "MATE": "https://westlake.bridge.school.nz/course_selection/learning_areas/1912",
-        "MASE": "https://westlake.bridge.school.nz/course_selection/learning_areas/1912",
-        "ENGE": "https://westlake.bridge.school.nz/course_selection/learning_areas/1905",
-        "SSTE": "https://westlake.bridge.school.nz/course_selection/learning_areas/1913",
         "DTC": "https://westlake.bridge.school.nz/course_selection/learning_areas/1915",
         "DRA": "https://westlake.bridge.school.nz/course_selection/learning_areas/2417",
         "MUS": "https://westlake.bridge.school.nz/course_selection/learning_areas/1900"
-
-        // Add more as needed
     };
+
+    // --- IMPROVED MODAL CHECK ---
+    function isWmiModalActive() {
+        const modalIds = [
+            'wmi-settings-modal',
+            'custom-overlay',
+            'wmi-logs-overlay',
+            'wmi-bg-overlay',
+            'wmi-cropper-overlay'
+        ];
+
+        for (let id of modalIds) {
+            const el = document.getElementById(id);
+            // Check if element exists AND is actually visible to the user
+            if (el && window.getComputedStyle(el).display !== 'none') {
+                return true;
+            }
+        }
+        return false;
+    }
 
     const tooltip = document.createElement('div');
     Object.assign(tooltip.style, {
@@ -66,7 +79,7 @@
         borderRadius: '6px',
         fontSize: '12px',
         fontWeight: '400',
-        zIndex: '999999',
+        zIndex: '20000000', // Higher than everything
         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)',
         willChange: 'transform'
     });
@@ -87,6 +100,12 @@
         mouseX = e.clientX;
         mouseY = e.clientY;
 
+        // Block tooltips if a settings modal is open
+        if (isWmiModalActive()) {
+            tooltip.style.display = 'none';
+            return;
+        }
+
         const target = document.elementFromPoint(e.clientX, e.clientY);
         const box = target?.closest('.calendar-day');
 
@@ -104,9 +123,11 @@
                 label = "<strong> - NEXT CLASS: </strong>";
             }
 
-            tooltip.innerHTML = label + description + (subjectLinks[matchKey] ? "<br><i style='font-size:10px; opacity:0.7'>Click to view course page</i>" : "");
+            // Restore the "Click to view" host prompt
+            const linkHint = (matchKey && subjectLinks[matchKey]) ? "<br><i style='font-size:10px; opacity:0.7'>Click to view course page</i>" : "";
+
+            tooltip.innerHTML = label + description + linkHint;
             tooltip.style.display = 'block';
-            //box.style.cursor = subjectLinks[matchKey] ? 'pointer' : 'default'; // Change cursor to pointer if clickable
         } else {
             tooltip.style.display = 'none';
         }
@@ -114,6 +135,8 @@
 
     // --- CLICK LOGIC ---
     window.addEventListener('click', (e) => {
+        if (isWmiModalActive()) return;
+
         const target = document.elementFromPoint(e.clientX, e.clientY);
         const box = target?.closest('.calendar-day');
 
@@ -122,7 +145,7 @@
             const matchKey = Object.keys(subjectLinks).find(key => subjectTitle.includes(key));
 
             if (matchKey && subjectLinks[matchKey]) {
-                window.open(subjectLinks[matchKey], '_blank'); // Opens in a new tab
+                window.open(subjectLinks[matchKey], '_blank');
             }
         }
     });
