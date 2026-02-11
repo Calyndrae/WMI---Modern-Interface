@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name          WMI - "Other" Window
 // @namespace     http://tampermonkey.net/
-// @version       1.7
-// @description   Buttons stacked in a vertical list, aligned left.
+// @version       1.8
+// @description   Includes Custom Background with Blur and Reset.
 // @author        Gemini, Calyndrae
 // @match         https://westlake.school.kiwi/*
 // @grant         GM_xmlhttpRequest
+// @grant         GM_setValue
+// @grant         GM_getValue
 // @connect       raw.githubusercontent.com
 // @updateURL     https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20%22Other%22%20Window.user.js
 // @downloadURL   https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20%22Other%22%20Window.user.js
@@ -48,14 +50,21 @@
         .info-value { font-weight: 600; color: #334155; font-size: 0.95rem; }
         .info-link { color: #297536 !important; text-decoration: none; border-bottom: 1px solid transparent; transition: border 0.2s; }
         .info-link:hover { border-bottom: 1px solid #297536; }
-        
-        /* Ensure the injected buttons look like standard menu items */
+
         .wmi-nav-item {
             display: block !important;
             width: 100%;
             text-align: left !important;
             padding: 8px 20px !important;
             text-decoration: none !important;
+            cursor: pointer;
+        }
+
+        /* BACKGROUND BLUR SYSTEM */
+        .wmi-bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background-size: cover; background-position: center;
+            filter: blur(15px); transform: scale(1.1); transition: opacity 0.5s;
         }
     `;
     document.head.appendChild(style);
@@ -79,94 +88,115 @@
     document.getElementById('close-btn').onclick = () => { document.getElementById('custom-overlay').style.display = 'none'; };
 
     // ================================================================
-    // PART 2: NEW UPDATE LOGS ADDITION
+    // PART 2: UPDATE LOGS
     // ================================================================
     const LOGS_URL = "https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/refs/heads/main/updatelogs.txt";
 
-    const logStyle = document.createElement('style');
-    logStyle.innerHTML = `
-        #wmi-logs-overlay {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px); z-index: 10001;
-        }
-        #wmi-logs-window {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); width: 600px;
-            background: white; border-radius: 28px; padding: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4); font-family: 'Inter', sans-serif;
-        }
-        #wmi-logs-content {
-            max-height: 400px; overflow-y: auto; background: #f8fafc;
-            padding: 20px; border-radius: 16px; font-family: monospace;
-            font-size: 13px; color: #334155; white-space: pre-wrap;
-            border: 1px solid #e2e8f0; margin-top: 20px;
-        }
-    `;
-    document.head.appendChild(logStyle);
-
     const logHtml = `
-        <div id="wmi-logs-overlay">
-            <div id="wmi-logs-window">
+        <div id="wmi-logs-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(12px); z-index:10001;">
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; background:white; border-radius:28px; padding:40px; box-shadow:0 30px 60px rgba(0,0,0,0.4); font-family:'Inter', sans-serif;">
                 <span id="close-logs" style="position:absolute; top:20px; right:25px; font-size:30px; cursor:pointer; color:#cbd5e1;">&times;</span>
                 <h2 style="margin:0; color:#297536; font-weight:800;">Update History</h2>
-                <div id="wmi-logs-content">Loading logs...</div>
+                <div id="wmi-logs-content" style="max-height:400px; overflow-y:auto; background:#f8fafc; padding:20px; border-radius:16px; font-family:monospace; font-size:13px; color:#334155; white-space:pre-wrap; border:1px solid #e2e8f0; margin-top:20px;">Loading logs...</div>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', logHtml);
-
     document.getElementById('close-logs').onclick = () => { document.getElementById('wmi-logs-overlay').style.display = 'none'; };
 
+    // ================================================================
+    // PART 3: CUSTOM BACKGROUND SYSTEM (NEW)
+    // ================================================================
+    const bgOverlayHtml = `
+        <div id="wmi-bg-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(12px); z-index:10002;">
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:400px; background:white; border-radius:28px; padding:40px; text-align:center; font-family:'Inter', sans-serif;">
+                <span id="close-bg-settings" style="position:absolute; top:20px; right:25px; font-size:30px; cursor:pointer; color:#cbd5e1;">&times;</span>
+                <h2 style="margin:0 0 20px 0; color:#1a4d24; font-weight:800;">Background Settings</h2>
+                <p style="font-size: 14px; color: #64748b; margin-bottom: 25px;">Upload a custom image. It will be automatically blurred.</p>
+                <input type="file" id="wmi-bg-input" accept="image/*" style="display:none;">
+                <button id="wmi-upload-trigger" style="background:#297536; color:white; border:none; padding:12px 24px; border-radius:12px; font-weight:bold; cursor:pointer; width:100%; margin-bottom:10px;">Upload Image</button>
+                <button id="wmi-bg-reset" style="background:#f1f5f9; color:#64748b; border:none; padding:12px 24px; border-radius:12px; font-weight:bold; cursor:pointer; width:100%;">Reset to White</button>
+            </div>
+        </div>
+        <div id="wmi-bg-layer" class="wmi-bg-layer"></div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', bgOverlayHtml);
+
+    const bgLayer = document.getElementById('wmi-bg-layer');
+    const bgInput = document.getElementById('wmi-bg-input');
+
+    // Load saved background on startup
+    const savedBg = GM_getValue("custom_bg", null);
+    if (savedBg) bgLayer.style.backgroundImage = `url(${savedBg})`;
+
+    document.getElementById('close-bg-settings').onclick = () => { document.getElementById('wmi-bg-overlay').style.display = 'none'; };
+    document.getElementById('wmi-upload-trigger').onclick = () => { bgInput.click(); };
+
+    bgInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const imgData = event.target.result;
+                bgLayer.style.backgroundImage = `url(${imgData})`;
+                GM_setValue("custom_bg", imgData);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    document.getElementById('wmi-bg-reset').onclick = () => {
+        bgLayer.style.backgroundImage = 'none';
+        GM_setValue("custom_bg", null);
+        alert("Background reset to normal white.");
+    };
+
+    // ================================================================
+    // INJECTION LOGIC (VERTICAL LIST)
+    // ================================================================
     function injectButtons() {
         const menu = document.querySelector('#user-menu');
         if (!menu) return;
-
         const logoutBtn = menu.querySelector('a[href*="logout"]');
         if (!logoutBtn) return;
 
-        // 1. Original "Other" (Vertical List Style)
+        // 1. Other Button
         if (!document.getElementById('other-nav-link')) {
-            const otherBtn = document.createElement('a');
-            otherBtn.id = 'other-nav-link';
-            otherBtn.className = 'sk_nav_text nav-link wmi-nav-item';
-            otherBtn.innerText = 'Other';
-            otherBtn.onclick = (e) => {
-                e.preventDefault();
-                document.getElementById('custom-overlay').style.display = 'block';
-                menu.classList.remove('show');
-            };
-            menu.insertBefore(otherBtn, logoutBtn);
+            const btn = document.createElement('a');
+            btn.id = 'other-nav-link';
+            btn.className = 'sk_nav_text nav-link wmi-nav-item';
+            btn.innerText = 'Other';
+            btn.onclick = (e) => { e.preventDefault(); document.getElementById('custom-overlay').style.display = 'block'; menu.classList.remove('show'); };
+            menu.insertBefore(btn, logoutBtn);
         }
 
-        // 2. New Update Logs (Vertical List Style)
+        // 2. Custom Background Button
+        if (!document.getElementById('wmi-bg-btn')) {
+            const btn = document.createElement('a');
+            btn.id = 'wmi-bg-btn';
+            btn.className = 'sk_nav_text nav-link wmi-nav-item';
+            btn.innerText = '✨ Custom Background';
+            btn.style.color = '#297536';
+            btn.onclick = (e) => { e.preventDefault(); document.getElementById('wmi-bg-overlay').style.display = 'block'; menu.classList.remove('show'); };
+            menu.insertBefore(btn, logoutBtn);
+        }
+
+        // 3. Update Logs Button
         if (!document.getElementById('wmi-logs-btn')) {
-            const logsBtn = document.createElement('a');
-            logsBtn.id = 'wmi-logs-btn';
-            logsBtn.className = 'sk_nav_text nav-link wmi-nav-item';
-            logsBtn.innerText = 'Update Logs';
-            logsBtn.style.color = '#297536';
-            logsBtn.onclick = (e) => {
+            const btn = document.createElement('a');
+            btn.id = 'wmi-logs-btn';
+            btn.className = 'sk_nav_text nav-link wmi-nav-item';
+            btn.innerText = 'Update Logs';
+            btn.onclick = (e) => {
                 e.preventDefault();
                 document.getElementById('wmi-logs-overlay').style.display = 'block';
                 menu.classList.remove('show');
-
                 GM_xmlhttpRequest({
-                    method: "GET",
-                    url: LOGS_URL,
-                    onload: function(response) {
-                        if (response.status === 200) {
-                            document.getElementById('wmi-logs-content').innerText = response.responseText;
-                        } else {
-                            document.getElementById('wmi-logs-content').innerHTML = "<b>Error:</b> Server returned status " + response.status;
-                        }
-                    },
-                    onerror: function() {
-                        document.getElementById('wmi-logs-content').innerHTML = "<b>Critical Error:</b> Connection blocked by browser security.";
-                    }
+                    method: "GET", url: LOGS_URL,
+                    onload: function(r) { document.getElementById('wmi-logs-content').innerText = r.responseText; }
                 });
             };
-            menu.insertBefore(logsBtn, logoutBtn);
+            menu.insertBefore(btn, logoutBtn);
         }
     }
 
