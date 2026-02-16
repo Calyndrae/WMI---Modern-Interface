@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WMI - Virable NamePlaceHolder
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.9
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
@@ -63,6 +63,89 @@
         };
     }
 
+    /* --- START OF ENGAGEMENT TABLE FIX V3 --- */
+(function() {
+    const tableStyle = document.createElement('style');
+    tableStyle.innerHTML = `
+        /* 1. Fix the parent cell container */
+        .result-value {
+            vertical-align: middle !important;
+            padding: 10px !important;
+        }
+
+        /* 2. Reset the table to be a compact box */
+        .result-value table {
+            width: 320px !important; /* Fixed width prevents squishing */
+            float: right !important; /* Keeps it on the right side */
+            border-collapse: separate !important;
+            border-spacing: 0 4px !important; /* Adds small gap between rows */
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* 3. Style the rows as "pills" */
+        .result-value table tr {
+            display: flex !important;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            padding: 4px 10px !important;
+        }
+
+        /* 4. Fix the text nodes - NO MORE STACKING */
+        .result-value table td {
+            display: block !important;
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            white-space: nowrap !important; /* Forces text to stay on one line */
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* 5. Highlight the Grade Number */
+        .result-value table td:last-child {
+            color: #1a4d24 !important;
+            font-size: 13px !important;
+            margin-left: 15px;
+        }
+    `;
+    document.head.appendChild(tableStyle);
+
+    function fixGrades() {
+        const nestedTables = document.querySelectorAll('.result-value table');
+        nestedTables.forEach(table => {
+            // Scrub all the old school attributes
+            table.removeAttribute('width');
+            table.removeAttribute('cellpadding');
+            table.removeAttribute('cellspacing');
+            table.removeAttribute('border');
+
+            // Scrub widths from individual cells
+            const cells = table.querySelectorAll('td');
+            cells.forEach(td => {
+                td.removeAttribute('width');
+                // If the cell only contains a number, give it a class for styling
+                if (!isNaN(td.innerText.trim())) {
+                    td.style.minWidth = "20px";
+                    td.style.textAlign = "right";
+                }
+            });
+        });
+    }
+
+    fixGrades();
+    const gradeObserver = new MutationObserver(fixGrades);
+    gradeObserver.observe(document.body, { childList: true, subtree: true });
+})();
+/* --- END OF ENGAGEMENT TABLE FIX V3 --- */
+
     // 2. Button Injection Logic
     function injectButton() {
         const menu = document.getElementById('user-menu');
@@ -96,3 +179,5 @@
     const observer = new MutationObserver(injectButton);
     observer.observe(document.body, { childList: true, subtree: true });
 })();
+
+
