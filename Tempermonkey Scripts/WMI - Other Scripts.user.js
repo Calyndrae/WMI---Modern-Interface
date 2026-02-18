@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WMI - Other Scripts
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
@@ -63,21 +63,69 @@
         };
     }
 
-    (function() {
-    const css = `
+
+
+
+(function() {
+    'use strict';
+
+    // 1. Setup the Style Element
+    const styleId = 'global-invert-style';
+    let styleTag = document.getElementById(styleId);
+    if (!styleTag) {
+        styleTag = document.createElement('style');
+        styleTag.id = styleId;
+        document.documentElement.appendChild(styleTag);
+    }
+
+    // 2. Define the 100% Inversion CSS
+    const invertCss = `
         html {
-            filter: invert(80%) hue-rotate(180deg) !important;
-            background-color: white !important;
+            filter: invert(100%) hue-rotate(180deg) !important;
+            background: white !important;
         }
-        /* Re-inverting media so they don't look like negatives */
-        img, video, canvas {
+        /* Re-invert media so they look normal */
+        img, video, canvas, .sk_nav_text {
             filter: invert(100%) hue-rotate(180deg) !important;
         }
     `;
-    const style = document.createElement('style');
-    style.textContent = css;
-    document.documentElement.appendChild(style);
+
+    // 3. Create the Button
+    const toggleBtn = document.createElement('a');
+    toggleBtn.className = 'sk_nav_text nav-link';
+    toggleBtn.id = 'color-toggle-btn';
+    toggleBtn.style.cursor = 'pointer';
+    toggleBtn.style.fontWeight = 'bold';
+    toggleBtn.style.color = '#3498db !important'; // Blue color for visibility
+    toggleBtn.textContent = '🌓 Enable Invert';
+
+    // 4. Toggle Logic (Off vs 100%)
+    let isInverted = false;
+
+    toggleBtn.onclick = function() {
+        if (!isInverted) {
+            styleTag.textContent = invertCss;
+            toggleBtn.textContent = '☀️ Disable Invert';
+        } else {
+            styleTag.textContent = '';
+            toggleBtn.textContent = '🌓 Enable Invert';
+        }
+        isInverted = !isInverted;
+    };
+
+    // 5. Injection into the Westlake Menu
+    const menu = document.getElementById('user-menu');
+    if (menu) {
+        const logoutBtn = menu.querySelector('a[href*="logout"]');
+        // Insert button + a divider line
+        menu.insertBefore(toggleBtn, logoutBtn);
+        const divider = document.createElement('div');
+        divider.className = 'dropdown-divider';
+        menu.insertBefore(divider, logoutBtn);
+    }
 })();
+
+
     
     /* --- START OF ENGAGEMENT TABLE FIX V3 --- */
 (function() {
