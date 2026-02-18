@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         WMI - Virable NamePlaceHolder
+// @name         WMI - Other Scripts
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      2.0
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
@@ -63,6 +63,22 @@
         };
     }
 
+    (function() {
+    const css = `
+        html {
+            filter: invert(80%) hue-rotate(180deg) !important;
+            background-color: white !important;
+        }
+        /* Re-inverting media so they don't look like negatives */
+        img, video, canvas {
+            filter: invert(100%) hue-rotate(180deg) !important;
+        }
+    `;
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.documentElement.appendChild(style);
+})();
+    
     /* --- START OF ENGAGEMENT TABLE FIX V3 --- */
 (function() {
     const tableStyle = document.createElement('style');
