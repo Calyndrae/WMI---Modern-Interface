@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         WMI - Other Scripts
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Virable%20NamePlaceHolder.user.js
-// @downloadURL  https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Virable%20NamePlaceHolder.user.js
+// @updateURL    https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Other%20Scripts.user.js
+// @downloadURL  https://raw.githubusercontent.com/Calyndrae/WMI---Modern-Interface/main/Tempermonkey%20Scripts/WMI%20-%20Other%20Scripts.user.js
 // ==/UserScript==
 
 (function() {
