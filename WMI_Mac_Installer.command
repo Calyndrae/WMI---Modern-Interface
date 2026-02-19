@@ -30,7 +30,7 @@ SCRIPTS=(
     "WMI%20-%20Profile%20Customizer.user.js"
     "WMI%20-%20Subject%20Interaction.user.js"
     "WMI%20-%20Subject%20Tracker.user.js"
-    "WMI%20-%20Virable%20NamePlaceHolder.user.js"
+    "WMI%20-%20Other%20Scripts.user.js"
     "WMI%20-%20Web%20Edit%20Belonging%20Info.user.js"
 )
 
