@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         WMI - Current Subject Block
 // @namespace    http://tampermonkey.net/
-// @version      6.1
-// @description  A floating hub that shows the current status.
+// @version      6.2
+// @description  A floating hub that shows the current status. Fixed overlap/50min logic.
 // @author       Gemini, Calyndrae
 // @match        https://westlake.school.kiwi/*
 // @grant        none
@@ -15,7 +15,7 @@
 
     // 1. Setup HUD Style
     const hub = document.createElement('div');
-    const tetherRange = 20; // How far it can drift from the corner (tether length)
+    const tetherRange = 20;
 
     Object.assign(hub.style, {
         position: 'fixed',
@@ -63,28 +63,22 @@
     });
 
     function animate() {
-        // Find the "Home" position (bottom-left)
-        const homeX = 30 + 120; // left + half-width
-        const homeY = window.innerHeight - 30 - 45; // bottom + half-height
+        const homeX = 30 + 120;
+        const homeY = window.innerHeight - 30 - 45;
 
-        // Calculate vector from Home to Mouse
         const diffX = mouseX - homeX;
         const diffY = mouseY - homeY;
         const angle = Math.atan2(diffY, diffX);
         const dist = Math.sqrt(diffX * diffX + diffY * diffY);
 
-        // Tether: The HUD stays within tetherRange, but always points to mouse
         const targetDist = Math.min(dist * 0.15, tetherRange);
         const targetX = Math.cos(angle) * targetDist;
         const targetY = Math.sin(angle) * targetDist;
 
-        // "Lerp" for smoothness (Linear Interpolation)
-        // 0.1 makes it follow with a slight delay/elastic feel
         currentX += (targetX - currentX) * 0.1;
         currentY += (targetY - currentY) * 0.1;
 
         hub.style.transform = `translate(${currentX}px, ${currentY}px)`;
-
         requestAnimationFrame(animate);
     }
 
@@ -111,31 +105,28 @@
         const now = new Date();
         const currentTime = now.getHours() * 60 + now.getMinutes();
 
-        const firstPeriodStart = parseTime(periods[0].querySelector('.text-muted')?.textContent.trim());
-        const lastPeriodStart = parseTime(periods[periods.length - 1].querySelector('.text-muted')?.textContent.trim());
-        const dayEnd = lastPeriodStart + 50;
-
-        // Check if day hasn't started or has ended
-        if (currentTime >= dayEnd || currentTime < firstPeriodStart) {
-            showClosed(); return;
-        }
-
         let S = null, E = null, activeName = "";
+
+        // Loop through all periods. If multiple subjects overlap (like 2:30 start vs 2:50 end),
+        // the one starting later will be the final value for S and activeName.
         for (let i = 0; i < periods.length; i++) {
             const periodStart = parseTime(periods[i].querySelector('.text-muted')?.textContent.trim());
-            const nextTimeText = (i + 1 < periods.length) ? periods[i+1].querySelector('.text-muted')?.textContent.trim() : null;
-            const nextStartTime = parseTime(nextTimeText);
-            const technicalEnd = nextStartTime ? nextStartTime : (periodStart + 60);
+            if (periodStart === null) continue;
 
-            if (currentTime >= periodStart && currentTime < technicalEnd) {
-                S = periodStart; E = periodStart + 50;
+            const periodEnd = periodStart + 50;
+
+            if (currentTime >= periodStart && currentTime < periodEnd) {
+                S = periodStart;
+                E = periodEnd;
                 activeName = periods[i].querySelector('strong')?.innerText || "Class";
-                break;
             }
         }
 
-        if (S !== null && currentTime < E) {
-            const percentage = Math.max(0, Math.min(100, ((E - currentTime) / (E - S)) * 100));
+        if (S !== null) {
+            // Logic: Percentage of the 50-minute block REMAINING
+            const timePassed = currentTime - S;
+            const percentage = Math.max(0, Math.min(100, ((50 - timePassed) / 50) * 100));
+
             fill.style.width = `${percentage}%`;
             percentTxt.innerText = `${Math.round(percentage)}% Left`;
             subjectTxt.innerText = activeName;
@@ -156,7 +147,6 @@
         percentTxt.innerText = "";
     }
 
-    // Initialize Loops
     setInterval(updateTracker, 2000);
     updateTracker();
     requestAnimationFrame(animate);
